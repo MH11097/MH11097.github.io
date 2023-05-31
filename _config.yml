@@ -27,10 +27,10 @@ description: >-                        # used by seo meta and the atom feed
 url: 'https://hieulm11097.github.io'
 
 github:
-  username: hieulm11097             # change to your github username
+  username: MH11097             # change to your github username
 
 twitter:
-  username: hieulm11097             # change to your twitter username
+  username: lmi_hi110             # change to your twitter username
 
 social:
   # Change to your full name.
@@ -39,8 +39,8 @@ social:
   email: minhhieu111097@gmail.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/hieulm11097      # change to your twitter homepage
-    - https://github.com/hieulm11097       # change to your github homepage
+    - https://twitter.com/lmi_hi110      # change to your twitter homepage
+    - https://github.com/MH11097       # change to your github homepage
     - https://www.facebook.com/mhieu110
     - https://www.linkedin.com/in/hieulm110
     - https://www.upwork.com/freelancers/~0144e05141316d75de
@@ -76,7 +76,7 @@ theme_mode:
 img_cdn: ''
 
 # the avatar on sidebar, support local or CORS resources
-avatar: assets/img/favicons/dandevlion-logo.png
+avatar: assets/img/favicons/logo.png
 
 # boolean type, the global switch for ToC in posts.
 toc: true
