@@ -2,7 +2,7 @@
 
 -
   type: github
-  icon: 'fa-brands fa-github'
+  icon: 'fab fa-github'
 -
   type: telegram
   icon: 'fab fa-telegram'
