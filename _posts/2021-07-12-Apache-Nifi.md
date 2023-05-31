@@ -1,11 +1,13 @@
 ---
 title: Tìm hiểu về Apache Nifi
-author: viethoang
-date: 2021-07-12 20:52:00 +0700
-categories: [Blogging, Share]
-tags: [Big data,Data Ingestion,Apache Nifi]
+date: 2023-05-31 14:51:00 +0700
+categories: [Big Data, Apache Nifi]
+tags: [Big data, Apache Nifi]
 math: true
 mermaid: true
+image:
+  path: /assets/img/thumnail/apache-nifi.png
+  alt: Responsive rendering of Chirpy theme on multiple devices.
 ---
 
 Apache nifi được sử dụng để tự động hóa và kiểm soát các luồng dữ liệu giữa các hệ thống. Nó cung cấp cho chúng ta một giao diện trên nền web mà có thể thu thập, xử lý, phân tích dữ liệu .
