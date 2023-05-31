@@ -15,38 +15,37 @@ timezone: Asia/Ho_Chi_Minh
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # --------------------------
-title: De Manejar                          # the main title
+title: Hieulm's Blog                       # the main title
 
-tagline: Hello Bigdata !   # it will display as the sub-title
+tagline: Ghi chú lặt vặt của một Data Engineer   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  (c) Copyright Demanejar. 
-  Một website nhỏ về bigdata 
-  được viết bởi team Demanejar.
-  
+  (c) Copyright Hieulm.
+  Blog về các kiến thức Data Engineer.
+
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: 'https://demanejar.github.io'
+url: 'https://hieulm11097.github.io'
 
 github:
-  username: demanejar             # change to your github username
+  username: hieulm11097             # change to your github username
 
 twitter:
-  username: DeManejar             # change to your twitter username
+  username: hieulm11097             # change to your twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: demanejar
-  email: demanejar@gmail.com             # change to your email address
+  name: Hieu Le Minh
+  email: minhhieu111097@gmail.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/DeManejar      # change to your twitter homepage
-    - https://github.com/demanejar       # change to your github homepage
-    # Uncomment below to add more social links 
-    # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/trannguyenhan
+    - https://twitter.com/hieulm11097      # change to your twitter homepage
+    - https://github.com/hieulm11097       # change to your github homepage
+    - https://www.facebook.com/mhieu110
+    - https://www.linkedin.com/in/hieulm110
+    - https://www.upwork.com/freelancers/~0144e05141316d75de
 
-google_site_verification: google_meta_tag_verification # change to your verification string 
+google_site_verification: google_meta_tag_verification # change to your verification string
 # --------------------------
 
 google_analytics:
@@ -67,7 +66,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: 
+theme_mode:
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
@@ -77,7 +76,7 @@ theme_mode:
 img_cdn: ''
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://i.pinimg.com/564x/9c/32/79/9c3279b5ac960533cbcb7e833ac4d947.jpg
+avatar: assets/img/favicons/dandevlion-logo.png
 
 # boolean type, the global switch for ToC in posts.
 toc: true
