@@ -5,9 +5,7 @@ categories: [Big Data, Apache Hadoop]
 tags: [Big data, Apache Hadoop]
 math: true
 mermaid: true
-image:
-  path: assets/img/thumnail/apache-hadoop.png
-  alt: Responsive rendering of Chirpy theme on multiple devices.
+image: assets/img/thumbnail/apache-hadoop.png 
 ---
 
 ## INSTALL HADOOP
