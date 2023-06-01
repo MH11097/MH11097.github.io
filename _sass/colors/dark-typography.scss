@@ -9,7 +9,7 @@
   --main-border-color: rgb(44, 45, 45);
 
   /* Common color */
-  --text-color: rgb(39, 40, 43);
+  --text-color: rgb(175, 176, 177);
   --text-muted-color: rgb(107, 116, 124);
   --heading-color: #cccccc;
   --blockquote-border-color: rgb(66, 66, 66);
@@ -27,10 +27,10 @@
   --checkbox-checked-color: var(--link-color);
   --img-bg: radial-gradient(circle, rgb(22, 22, 24) 0%, rgb(32, 32, 32) 100%);
   --shimmer-bg: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(58, 55, 55, 0.4) 50%,
-      rgba(255, 255, 255, 0) 100%
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(58, 55, 55, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
   );
 
   /* Sidebar */
@@ -70,7 +70,7 @@
   --card-bg: #1e1e1e;
   --card-hovor-bg: #464d51;
   --card-shadow: rgb(21, 21, 21, 0.72) 0 6px 18px 0,
-  rgb(137, 135, 135, 0.24) 0 0 0 1px;
+    rgb(137, 135, 135, 0.24) 0 0 0 1px;
   --kbd-wrap-color: #6a6a6a;
   --kbd-text-color: #d3d3d3;
   --kbd-bg-color: #242424;
@@ -133,12 +133,12 @@
 
   #archives li:nth-child(odd) {
     background-image: linear-gradient(
-        to left,
-        rgb(26, 26, 30),
-        rgb(39, 39, 45),
-        rgb(39, 39, 45),
-        rgb(39, 39, 45),
-        rgb(26, 26, 30)
+      to left,
+      rgb(26, 26, 30),
+      rgb(39, 39, 45),
+      rgb(39, 39, 45),
+      rgb(39, 39, 45),
+      rgb(26, 26, 30)
     );
   }
 

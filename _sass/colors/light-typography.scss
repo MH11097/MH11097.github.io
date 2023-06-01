@@ -19,20 +19,20 @@
   --button-bg: #ffffff;
   --btn-border-color: #e9ecef;
   --btn-backtotop-color: #686868;
-  --btn-backtotop-border-color: #686868;
+  --btn-backtotop-border-color: #f1f1f1;
   --btn-box-shadow: #eaeaea;
   --checkbox-color: #c5c5c5;
   --checkbox-checked-color: #07a8f7;
   --img-bg: radial-gradient(
-      circle,
-      rgb(255, 255, 255) 0%,
-      rgb(239, 239, 239) 100%
+    circle,
+    rgb(255, 255, 255) 0%,
+    rgb(239, 239, 239) 100%
   );
   --shimmer-bg: linear-gradient(
-      90deg,
-      rgba(250, 250, 250, 0) 0%,
-      rgba(232, 230, 230, 1) 50%,
-      rgba(250, 250, 250, 0) 100%
+    90deg,
+    rgba(250, 250, 250, 0) 0%,
+    rgba(232, 230, 230, 1) 50%,
+    rgba(250, 250, 250, 0) 100%
   );
 
   /* Sidebar */
@@ -65,7 +65,7 @@
   --card-bg: white;
   --card-hovor-bg: #e2e2e2;
   --card-shadow: rgb(104, 104, 104, 0.05) 0 2px 6px 0,
-  rgba(211, 209, 209, 0.15) 0 0 0 1px;
+    rgba(211, 209, 209, 0.15) 0 0 0 1px;
   --label-color: #616161;
   --relate-post-date: rgba(30, 55, 70, 0.4);
   --footnote-target-bg: lightcyan;

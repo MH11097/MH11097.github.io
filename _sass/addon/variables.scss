@@ -1,22 +1,28 @@
 /*
-* Mainly scss variables
-*/
+ * The SCSS variables
+ */
 
-/* --- ↓ width and height ---- */
+/* sidebar */
 
-$tab-height: 3.2rem;
-$tab-cursor-height: 1.6rem;
+$sidebar-width: 260px !default; /* the basic width */
+$sidebar-width-large: 300px !default; /* screen width: >= 1650px */
 
-$sidebar-width-small: 210px;
-$sidebar-width-medium: 260px;
-$sidebar-width-large: 350px;
+/* other framework sizes */
 
-$topbar-height: 3rem;
+$topbar-height: 3rem !default;
+$search-max-width: 210px !default;
+$footer-height: 5rem !default;
+$footer-height-mobile: 6rem !default; /* screen width: < 850px */
+$main-content-max-width: 1250px !default;
+$bottom-min-height: 35rem !default;
+$base-radius: 0.5rem;
 
-$footer-height: 5rem;
+/* syntax highlight */
 
-$main-content-max-width: 1150px;
+$code-font-size: 0.85rem !default;
 
-$panel-max-width: 300px;
+/* fonts */
 
-$post-extend-min-height: 35rem;
+$font-family-base:  'DM Sans','Poppins','Arial','Lato',sans-serif;
+
+$font-family-heading: 'DM Sans','Poppins','Arial','Lato',sans-serif;
