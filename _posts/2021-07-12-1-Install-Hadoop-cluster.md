@@ -1,11 +1,11 @@
 ---
-title: \[Hadoop 101\] 1. Cài đặt Hadoop cluster
+title: '[Hadoop 101] 1. Cài đặt Hadoop cluster'
 date: 2023-06-01 10:55:00 +0700
 categories: [Big Data, Apache Hadoop]
 tags: [Big data, Apache Hadoop]
 math: true
 mermaid: true
-image: assets/img/thumbnail/apache-hadoop.png 
+image: /assets/img/thumbnail/apache-hadoop.png 
 ---
 
 ## INSTALL HADOOP
