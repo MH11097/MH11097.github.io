@@ -1,7 +1,7 @@
 /*
   The common styles
 */
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Lato&family=Source+Sans+Pro:wght@400;600;900&display=swap');
 
 @mixin mode-toggle($dark-mode: false) {
   @if $dark-mode {
@@ -43,6 +43,8 @@ html[mode=dark] {
 
 :root {
   font-size: 16px;
+  font-family: 'poppins','Arial','Lato',sans-serif;
+
 }
 
 body {
@@ -50,7 +52,6 @@ body {
   background: var(--body-bg);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
-  font-family: 'Source Code Pro','SFMono-Regular','Menlo','Monaco','Consolas','Liberation Mono','Courier New','monospace';
 }
 
 /* --- Typography --- */
@@ -59,6 +60,7 @@ h1 {
   @extend %heading;
 
   font-size: 1.8rem;
+
 }
 
 h2 {
@@ -67,6 +69,7 @@ h2 {
   @extend %anchor;
 
   font-size: 1.4rem;
+
 }
 
 h3 {
@@ -662,14 +665,15 @@ $sidebar-display: "sidebar-display";
       font-weight: 900;
       font-size: 1.5rem;
       letter-spacing: 0.5px;
+      color: #ffffff;
     }
   }
 
   .site-subtitle {
-    font-size: 95%;
-    color: #828282;
+    font-size: 90%;
+    color: #616161;
     line-height: 1.2rem;
-    word-spacing: 1px;
+    word-spacing: 0.6px;
     margin: 0.5rem 1.5rem 0.5rem 1.5rem;
     min-height: 3rem; // avoid vertical shifting in multi-line words
     user-select: none;
