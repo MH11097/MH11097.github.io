@@ -1,11 +1,7 @@
 /*
   The common styles
 */
-<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=Poppins&family=Lato&family=Source+Sans+Pro:wght@400;600;900&display=swap');
-=======
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;900&display=swap');
->>>>>>> parent of c503730 (update)
 
 html {
   @media (prefers-color-scheme: light) {
@@ -35,11 +31,8 @@ html {
 
 :root {
   font-size: 16px;
-<<<<<<< HEAD
   font-family: $font-family-base;
 
-=======
->>>>>>> parent of c503730 (update)
 }
 body {
   background: var(--main-bg);
@@ -47,11 +40,7 @@ body {
     env(safe-area-inset-bottom) env(safe-area-inset-left);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
-<<<<<<< HEAD
   font-family: $font-family-base;
-=======
-  font-family: 'Source Code Pro','SFMono-Regular','Menlo','Monaco','Consolas','Liberation Mono','Courier New','monospace';
->>>>>>> parent of c503730 (update)
 }
 
 /* --- Typography --- */
@@ -60,7 +49,6 @@ body {
   h#{$i} {
     @extend %heading;
 
-<<<<<<< HEAD
     @if $i > 1 {
       @extend %section;
       @extend %anchor;
@@ -68,54 +56,15 @@ body {
 
     @if $i < 5 {
       $factor: 0.18rem;
-=======
-  font-size: 1.8rem;
-}
->>>>>>> parent of c503730 (update)
 
       @if $i == 1 {
         $factor: 0.23rem;
       }
 
-<<<<<<< HEAD
       font-size: 1rem + (5 - $i) * $factor;
     } @else {
       font-size: 1rem;
     }
-=======
-  font-size: 1.4rem;
-}
-
-h3 {
-  @extend %heading;
-  @extend %section;
-  @extend %anchor;
-
-  font-size: 1.25rem;
-}
-
-h4 {
-  @extend %heading;
-  @extend %section;
-  @extend %anchor;
-
-  font-size: 1.15rem;
-}
-
-h5 {
-  @extend %heading;
-  @extend %section;
-  @extend %anchor;
-
-  font-size: 1.1rem;
-}
-
-ol,
-ul {
-  ol,
-  ul {
-    margin-bottom: 1rem;
->>>>>>> parent of c503730 (update)
   }
 }
 
@@ -811,33 +760,19 @@ $btn-mb: 0.5rem;
     margin-bottom: 0.5rem;
 
     a {
-<<<<<<< HEAD
       @extend %clickable-transition;
       @extend %sidebar-link-hover;
-=======
-      font-weight: 900;
-      font-size: 1.5rem;
-      letter-spacing: 0.5px;
->>>>>>> parent of c503730 (update)
     }
   }
 
   .site-subtitle {
     font-size: 95%;
-<<<<<<< HEAD
     color: var(--sidebar-muted-color);
     margin-top: 0.25rem;
     word-spacing: 1px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-=======
-    color: #828282;
-    line-height: 1.2rem;
-    word-spacing: 1px;
-    margin: 0.5rem 1.5rem 0.5rem 1.5rem;
-    min-height: 3rem; // avoid vertical shifting in multi-line words
->>>>>>> parent of c503730 (update)
     user-select: none;
   }
 
