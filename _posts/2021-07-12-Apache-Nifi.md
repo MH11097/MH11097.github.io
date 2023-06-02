@@ -1,5 +1,5 @@
 ---
-title: Tìm hiểu về Apache Nifi
+title: '[Apache Nifi #0] Tìm hiểu về Apache Nifi'
 date: 2023-05-31 14:51:00 +0700
 categories: [Big Data, Apache Nifi]
 tags: [Big data, Apache Nifi]
