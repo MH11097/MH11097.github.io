@@ -49,21 +49,6 @@ layout: page
     <h1>
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
     </h1>
-
-    {% if post.image %}
-      {% if post.image.lqip %}
-        {% capture lqip %}lqip="{{ post.image.lqip }}"{% endcapture %}
-      {% endif %}
-
-      {% assign src = post.image.path | default: post.image %}
-      {% unless src contains '//' %}
-      {% assign src = post.img_path | append: '/' | append: src | replace: '//', '/' %}
-      {% endunless %}
-
-      {% assign alt = post.image.alt | default: 'Preview Image' %}
-      <img src="{{ src }}" w="15" h="8" alt="{{ alt }}" {{ lqip }}>
-    {% endif %}
-
     <div class="post-content">
       <p>
         {% include no-linenos.html content=post.content %}
