@@ -5,7 +5,8 @@ categories: [Big Data, Apache Hadoop]
 tags: [Big data, Apache Hadoop]
 math: true
 mermaid: true
-image: assets/img/thumbnail/apache-hadoop.png 
+image: 
+  path: src/assets/img/thumbnail/apache-hadoop.png 
 ---
 
 ## INSTALL HADOOP

@@ -6,7 +6,7 @@ tags: [Big data, Apache Nifi]
 math: true
 mermaid: true
 image:
-  path: assets/img/thumnail/apache-nifi.png
+  path: src/assets/img/thumnail/apache-nifi.png
   alt: Responsive rendering of Chirpy theme on multiple devices.
 ---
 
