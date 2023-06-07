@@ -132,6 +132,27 @@ defaults:
       layout: page
       permalink: /:title/
       dynamic_title: true    # Hide title in mobile screens.
+  - scope:
+      path: ''
+      type: posts             # see `site.collections`
+    values:
+      category_weights:
+        Big Data: 300
+        Apache Hadoop: 302
+        Apache Nifi: 301
+        Fundamental: 100
+        Git: 102
+        Introduction: 101
+        Network: 104
+        OS: 103
+        Security: 105
+        Programing: 200
+        Data structure and Algorithm: 201
+        Golang: 206
+        Java: 202
+        Python: 204
+        R: 205
+        Scala: 203
 
 sass:
   style: compressed
