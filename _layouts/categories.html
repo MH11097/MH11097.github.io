@@ -81,9 +81,9 @@ layout: page
     <div id="{{ LIST_PREFIX }}{{ group_index }}" class="collapse show" aria-expanded="true">
       <ul class="list-group">
         {% for sub_category in sub_categories %}
-          {% assign sub_category_name = sub_category | first %}
+          {% assign sub_category_name = sub_category %}
           {% assign sub_category_weight = category_weights[sub_category_name] %}
-          {% assign sub_category_display_name = sub_category_name | append: 'zzz' | append: sub_category_weight %}
+          {% assign sub_category_display_name = sub_category_name | append: '' | append: sub_category_weight %}
           <li class="list-group-item">
             <i class="far fa-folder fa-fw"></i>
             <a href="{{ site.baseurl }}/categories/{{ sub_category | slugify | url_encode }}/"
