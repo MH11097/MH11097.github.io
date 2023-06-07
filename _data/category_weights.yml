@@ -1,16 +1,16 @@
-Big Data: 300
-Apache Hadoop: 302
-Apache Nifi: 301
 Fundamental: 100
-Git: 102
 Introduction: 101
-Network: 104
+Git: 102
 OS: 103
+Network: 104
 Security: 105
 Programing: 200
 Data structure and Algorithm: 201
-Golang: 206
 Java: 202
+Scala: 203
 Python: 204
 R: 205
-Scala: 203
+Golang: 206
+Big Data: 300
+Apache Nifi: 301
+Apache Hadoop: 302
