@@ -9,7 +9,7 @@ layout: page
 
 {% assign group_index = 0 %}
 
-{% assign sort_categories = site.categories | sort_by: | site.data.category_weights %}
+{% assign sort_categories = site.categories | sort_by_weight %}
 
 {% for category in sort_categories %}
   {% assign category_name = category | first %}
@@ -28,7 +28,7 @@ layout: page
       {% endif %}
     {% endfor %}
 
-    {% assign sub_categories = sub_categories | sort_by: | site.data.category_weights %}
+    {% assign sub_categories = sub_categories | sort_by_weight %}
     {% assign sub_categories_size = sub_categories | size %}
 
   <div class="card categories">
