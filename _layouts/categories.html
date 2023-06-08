@@ -13,7 +13,7 @@ layout: page
 {% for category in sort_categories %}
   {% assign category_name1 = category | first %}
   {% assign category_weight1 = category_weights[category_name1] %}
-  <p>{{ category_name1 }} - {{ category_weight1 }}</p>
+  <p>{{ category }} - {{ category_weight1 }}</p>
 {% endfor %}
 
 {% for category in sort_categories %}
