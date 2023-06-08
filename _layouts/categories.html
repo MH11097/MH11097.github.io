@@ -9,7 +9,12 @@ layout: page
 
 {% assign group_index = 0 %}
 {% assign category_weights = site.data.category_weights %}
-{% assign sort_categories = site.categories | sort: '{{ item | first | lookup: category_weights }}' %}
+{% assign sort_categories = site.categories | sort_by: '{{ item | first | lookup: category_weights }}' %}
+{% for category in sort_categories %}
+  {% assign category_name1 = category | first %}
+  {% assign category_weight1 = category_weights[category_name1] %}
+  <p>{{ category_name1 }} - {{ category_weight1 }}</p>
+{% endfor %}
 
 {% for category in sort_categories %}
   {% assign category_name = category | first %}
