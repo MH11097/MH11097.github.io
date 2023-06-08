@@ -9,12 +9,12 @@ layout: page
 
 {% assign group_index = 0 %}
 {% assign category_weights = site.data.category_weights %}
-{% assign sort_categories = site.categories | sort_by: '{{ item | first | lookup: category_weights }}' %}
+{% assign sort_categories = site.categories | sort: '{{ item | first | lookup: category_weights }}' %}
 
 {% for category in sort_categories %}
   {% assign category_name = category | first %}
   {% assign category_weight = category_weights[category_name] %}
-  {% assign category_display_name = category_name | append: ' ' | append: category_weight %}
+  {% assign category_display_name = category_name | append: '-' | append: category_weight %}
 
   {% assign posts_of_category = category | last %}
   {% assign first_post = posts_of_category | first %}
