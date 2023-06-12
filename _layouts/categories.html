@@ -17,7 +17,7 @@ layout: page
 {% endfor %}
 
 {% for category in sort_categories %}
-  {% assign category_name = category | first %}
+  {% assign category_name = category[1] %}
   {% assign category_weight = category_weights[category_name] %}
   {% assign category_display_name = category_name | append: '-' | append: category_weight %}
 
