@@ -48,7 +48,7 @@ mermaid: true
   repoclosure --repoid=offline-<package-name>
   ```
 
-- Copy the `/var/tmp/<package-name>` repo directory to the other server set up the repo there:
+- Copy the `/var/tmp/<package-name>` repo directory to the other servers set up the repo there:
   ```sh
   [offline-<package-name>]
   name=<package-name>
