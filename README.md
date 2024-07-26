@@ -1,5 +1,3 @@
-The source code of my personal site at https://huy.rocks
-
 Site structure:
 
 ```
@@ -10,4 +8,4 @@ Site structure:
 
 Every project defined in `utils/consts.ts` will be served as `/<project>` page.
 
-The project's posts are parsed from `https://github.com/huytd/<project>/DEVLOG.md`.
+The project's posts are parsed from `https://github.com/MH111097/<project>/DEVLOG.md`.
