@@ -1,34 +1,72 @@
-import type { NextPage } from 'next'
-import Head from "next/head";
-import Link from 'next/link'
+import type { GetStaticProps, NextPage } from 'next';
+import Link from 'next/link';
+import { SEO } from '../components/SEO';
+import { getAllPosts, Post } from '../utils/posts';
+import { SITE_NAME, DESCRIPTION } from '../utils/consts';
 
-const Home: NextPage = () => {
-    return (
-        <>
-            <Head>
-                <meta name="google-site-verification" content="pSprDjtnAmX3XLxQpyoQ8lOTIpXXr9qqVsbl4A4KL4M" />
-            </Head>
-            <main className="container-center github-theme no-list my-10 min-h-full flex-1">
-                <p></p>
-                <h1>{"Hello! I'm Huy!"}</h1>
-                <p>{"Look like you've found my space on the internet."}</p>
-
-                <p>{"I keep a development log for some of the project I'm working on, you can find them here:"}</p>
-                <ol>
-                    <li><Link href="/everyday"><a className="font-bold">Everyday Learning</a></Link>: <i>Writing about what I learned everyday</i></li>
-                    <li><Link href="/gust-lang"><a className="font-bold">Gust-lang</a></Link>: <i>My journey to build a toy programming language</i></li>
-                    <li><Link href="/toylisp"><a className="font-bold">ToyLISP</a></Link>: <i>A toy LISP-alike language, focusing on building a bytecode interpreter.</i></li>
-                    <li><Link href="/ascii-d"><a className="font-bold">ASCII-d</a></Link>: <i>Cross-platform ASCII diagram drawing application</i></li>
-                    <li><Link href="/snarkyterm"><a className="font-bold">SnarkyTerm</a></Link>: <i>A terminal emulator written in Rust and WGPU</i></li>
-                    <li><Link href="/web-debugger"><a className="font-bold">Web Debugger</a></Link>: <i>A Web-based JavaScript debugger</i></li>
-                </ol>
-                <p>{"Most of my other projects doesn't have a DEVLOG, but please feel free to check them on GitHub."}</p>
-
-                <p>{"In case you're interested, you can reach me "}<b><Link href="mailto:hey@huy.rocks">via email</Link></b> or <b><Link href="https://github.com/huytd">visit my GitHub</Link></b></p>
-                <div className="mb-20">&nbsp;</div>
-            </main>
-        </>
-    )
+interface HomeProps {
+  posts: Post[];
 }
 
-export default Home
+const Home: NextPage<HomeProps> = ({ posts }) => {
+  return (
+    <>
+      <SEO title={SITE_NAME} description={DESCRIPTION} />
+      <main className="container-center github-theme my-10 min-h-full flex-1">
+        <div className="max-w-4xl mx-auto px-4">
+          <h1 className="text-4xl font-bold mb-6">Welcome to My Blog</h1>
+          <p className="text-lg text-gray-600 mb-8">
+            {DESCRIPTION}
+          </p>
+          
+          {posts.length > 0 ? (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-semibold mb-4">Recent Posts</h2>
+              {posts.map((post) => (
+                <article key={post.slug} className="border-b pb-6 mb-6">
+                  <h3 className="text-xl font-semibold mb-2">
+                    <Link 
+                      href={`/${post.slug}`} 
+                      className="hover:text-blue-600 transition-colors"
+                    >
+                      {post.title}
+                    </Link>
+                  </h3>
+                  <time className="text-sm text-gray-500 block mb-3">
+                    {new Date(post.date).toLocaleDateString()}
+                  </time>
+                  {post.excerpt && (
+                    <p className="text-gray-700 mb-3">{post.excerpt}</p>
+                  )}
+                  <Link 
+                    href={`/${post.slug}`}
+                    className="text-blue-600 hover:underline text-sm font-medium"
+                  >
+                    Read more →
+                  </Link>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500 mb-4">No posts yet. Add some markdown files to the posts/ directory!</p>
+              <p className="text-sm text-gray-400">Check the README for instructions.</p>
+            </div>
+          )}
+        </div>
+      </main>
+    </>
+  );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const posts = getAllPosts();
+  
+  return {
+    props: {
+      posts: posts.slice(0, 10), // Show latest 10 posts
+    },
+  };
+};
+
+export default Home;

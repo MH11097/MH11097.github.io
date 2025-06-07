@@ -1,31 +1,111 @@
-:root {
-	--font-title: "Rozha One";
-    --font-serif: "vollkorn", "Iowan Old Style", "Sitka Text", Palatino, "Book Antiqua", serif;
-    --punctuation-color: rgb(120 113 108);
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Spectral', serif;
+    min-height: 100vh;
+}
+
+#__next {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 .container-center {
-    @apply px-5 md:px-0 w-screen md:w-[700px] mx-auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .center-horizontal {
-    @apply flex items-center;
+    text-align: left;
 }
 
-.font-title {
-	font-family: var(--font-title);
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
-@layer components {
-    #__next {
-        @apply min-h-screen flex flex-col;
-    }
-    html,
-    body {
-        @apply min-h-screen;
-    }
+.animate-blink {
+    animation: blink 1s infinite;
+}
+
+/* Prose styling for blog content */
+.prose {
+    @apply text-gray-800 leading-relaxed;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+    @apply font-bold text-gray-900 mt-8 mb-4;
+}
+
+.prose h1 {
+    @apply text-3xl;
+}
+
+.prose h2 {
+    @apply text-2xl;
+}
+
+.prose h3 {
+    @apply text-xl;
+}
+
+.prose p {
+    @apply mb-4;
+}
+
+.prose ul,
+.prose ol {
+    @apply mb-4 pl-6;
+}
+
+.prose li {
+    @apply mb-2;
+}
+
+.prose blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 my-4;
+}
+
+.prose code {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+}
+
+.prose pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+}
+
+.prose pre code {
+    @apply bg-transparent p-0;
+}
+
+.prose a {
+    @apply text-blue-600 hover:underline;
 }
