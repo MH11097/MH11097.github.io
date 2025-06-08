@@ -27,12 +27,12 @@ const Home: NextPage<HomeProps> = ({ allPosts, projects }) => {
           
           {/* Header */}
           <section className="mb-12">
-            <h1 className="text-4xl font-bold mb-4">Hello! I'm MH11097!</h1>
+            <h1 className="text-4xl font-bold mb-4">Hello! I&apos;m MH11097!</h1>
             <p className="text-lg text-gray-600 mb-6">
-              Look like you've found my space on the internet.
+              Look like you&apos;ve found my space on the internet.
             </p>
             <p className="text-gray-700">
-              I keep development logs for the projects I'm working on. You can find them here:
+              I keep development logs for the projects I&apos;m working on. You can find them here:
             </p>
           </section>
 
@@ -140,7 +140,7 @@ const Home: NextPage<HomeProps> = ({ allPosts, projects }) => {
           {/* Contact */}
           <section className="mt-16 pt-8 border-t">
             <p className="text-gray-700">
-              Most of my other projects don't have a DEVLOG, but please feel free to check them on{' '}
+              Most of my other projects don&apos;t have a DEVLOG, but please feel free to check them on{' '}
               <a 
                 href="https://github.com/MH11097" 
                 className="text-blue-600 hover:underline font-semibold"
