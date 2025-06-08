@@ -12,7 +12,7 @@ export interface Post {
   project: string;
   slug: string;
   content: string;
-  rawTokens: marked.Token[];
+  rawContent: string;
 }
 
 async function fetchWithFallback(url: string): Promise<string | null> {
@@ -63,43 +63,30 @@ export const DataService = {
     }
 
     try {
-      const tokens = marked.lexer(project.content);
+      // Split content by h1 headers (# Title)
+      const sections = project.content.split(/^# /m).filter(section => section.trim());
       const posts: Post[] = [];
-      let currentPost: Post | null = null;
 
-      for (const token of tokens) {
-        if (token.type === "heading" && token.depth === 1) {
-          // Save previous post
-          if (currentPost !== null) {
-            posts.push(currentPost);
-          }
+      for (const section of sections) {
+        const lines = section.split('\n');
+        const title = lines[0].trim();
+        const content = lines.slice(1).join('\n').trim();
 
-          // Start new post
-          currentPost = {
-            title: token.text,
+        if (title) {
+          posts.push({
+            title,
             project: project.name,
-            slug: token.text.toLowerCase()
+            slug: title.toLowerCase()
               .replace(/[^\w\s-]/g, '') // Remove special chars
               .replace(/\s+/g, '-')      // Replace spaces with hyphens
               .trim(),
-            content: '',
-            rawTokens: []
-          };
-        } else if (currentPost !== null) {
-          currentPost.rawTokens.push(token);
+            content: marked(content),
+            rawContent: content
+          });
         }
       }
 
-      // Add last post
-      if (currentPost) {
-        posts.push(currentPost);
-      }
-
-      // Generate content for each post
-      return posts.map(post => ({
-        ...post,
-        content: marked.parser(post.rawTokens)
-      }));
+      return posts;
 
     } catch (error) {
       console.error(`Error parsing DEVLOG for ${project.name}:`, error);
