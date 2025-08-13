@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hieu Le Minh's Blog</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&subset=latin-ext,vietnamese" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/highlight/tomorrow-night.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+        .post-list { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .post-item { border-bottom: 1px solid #eee; padding: 20px 0; }
+        .post-item:last-child { border-bottom: none; }
+        .post-title { font-size: 1.5em; margin-bottom: 10px; }
+        .post-title a { text-decoration: none; color: #333; }
+        .post-title a:hover { color: #0066cc; }
+        .post-meta { color: #666; font-size: 0.9em; margin-bottom: 10px; }
+        .post-excerpt { color: #333; line-height: 1.6; }
+        .post-tags { margin-top: 10px; }
+        .tag { background: #f0f0f0; padding: 3px 8px; border-radius: 3px; font-size: 0.8em; margin-right: 5px; }
+        #post-content { max-width: 800px; margin: 0 auto; padding: 20px; display: none; }
+        .back-button { margin-bottom: 20px; }
+        .back-button a { color: #0066cc; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header id="user_top" class="cf">
+        <figure id="user_logo" class="active"><a href="https://mh11097.github.io">Hieu Le Minh's Blog</a></figure>
+        <h2><a href="https://mh11097.github.io">Hieu Le Minh's Blog</a></h2>
+        <h4><span class="name_head">by</span> Hieu Le Minh (MH11097)</h4>
+        <h3>Data Engineer at <a href="https://bidv.com.vn/" target="_blank">BIDV</a>. Passionate about data architecture, ETL flows, and learning to become DataDevSecOps.</h3>
+    </header>
+
+    <div id="blog-content">
+        <div id="post-list" class="post-list">
+            <h2>Recent Posts</h2>
+            <div id="posts-container"></div>
+        </div>
+
+        <div id="post-content">
+            <div class="back-button">
+                <a href="#" onclick="showPostList()">&larr; Back to posts</a>
+            </div>
+            <div id="single-post"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configure marked for syntax highlighting
+        marked.setOptions({
+            highlight: function(code, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    return hljs.highlight(code, { language: lang }).value;
+                }
+                return hljs.highlightAuto(code).value;
+            }
+        });
+
+        // List of posts (automatically generated from posts directory)
+        const posts = [
+            {
+                file: 'life-with-robot.md',
+                title: 'Lái xe với robot',
+                date: '2018-05-12',
+                tags: ['random'],
+                description: 'Con người sống chung với robot y như trong phim khoa học viễn tưởng...'
+            },
+            {
+                file: 'john-pin-problem.md',
+                title: 'Thuật toán phục hồi số hữu tỉ và bài toán John\'s PIN',
+                date: '2023-03-15',
+                tags: ['math', 'algorithm'],
+                description: 'Giải thuật thú vị về việc phục hồi số hữu tỉ...'
+            },
+            {
+                file: 'lap-trinh-va-toan-hoc.md',
+                title: 'Lập trình và Toán học',
+                date: '2017-10-10',
+                tags: ['opinion', 'random', 'math', 'algorithm'],
+                description: 'Mối quan hệ giữa lập trình và toán học...'
+            },
+            {
+                file: 'rust-binary-tree-traversal.md',
+                title: 'Binary Tree Traversal in Rust',
+                date: '2023-08-01',
+                tags: ['rust', 'algorithm', 'data-structures'],
+                description: 'Implementation and examples of binary tree traversal algorithms in Rust...'
+            },
+            {
+                file: 'mo-hinh-toan.md',
+                title: 'Mô hình toán',
+                date: '2023-06-15',
+                tags: ['math', 'modeling'],
+                description: 'Khám phá các mô hình toán học trong thực tế...'
+            },
+            {
+                file: 'open-source-license.md',
+                title: 'Open Source License',
+                date: '2023-05-20',
+                tags: ['open-source', 'license'],
+                description: 'Tìm hiểu về các loại license open source...'
+            }
+        ];
+
+        async function loadPost(filename) {
+            try {
+                const response = await fetch(`posts/${filename}`);
+                const text = await response.text();
+                return text;
+            } catch (error) {
+                console.error('Error loading post:', error);
+                return null;
+            }
+        }
+
+        function parseMarkdownMetadata(content) {
+            const lines = content.split('\n');
+            if (lines[0] === '---') {
+                const endIndex = lines.findIndex((line, index) => index > 0 && line === '---');
+                if (endIndex > 0) {
+                    const metadata = {};
+                    const metadataLines = lines.slice(1, endIndex);
+                    metadataLines.forEach(line => {
+                        const [key, ...valueParts] = line.split(':');
+                        if (key && valueParts.length > 0) {
+                            metadata[key.trim()] = valueParts.join(':').trim();
+                        }
+                    });
+                    const markdown = lines.slice(endIndex + 1).join('\n');
+                    return { metadata, markdown };
+                }
+            }
+            return { metadata: {}, markdown: content };
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN');
+        }
+
+        function renderPostList() {
+            const container = document.getElementById('posts-container');
+            container.innerHTML = '';
+
+            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post-item';
+                
+                const tagsHtml = post.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+                
+                postElement.innerHTML = `
+                    <div class="post-title">
+                        <a href="#" onclick="showPost('${post.file}')">${post.title}</a>
+                    </div>
+                    <div class="post-meta">
+                        ${formatDate(post.date)}
+                    </div>
+                    <div class="post-excerpt">
+                        ${post.description}
+                    </div>
+                    <div class="post-tags">
+                        ${tagsHtml}
+                    </div>
+                `;
+                
+                container.appendChild(postElement);
+            });
+        }
+
+        async function showPost(filename) {
+            const content = await loadPost(filename);
+            if (!content) {
+                alert('Could not load post');
+                return;
+            }
+
+            const { metadata, markdown } = parseMarkdownMetadata(content);
+            const html = marked.parse(markdown);
+
+            document.getElementById('single-post').innerHTML = `
+                <h1>${metadata.title || 'Untitled'}</h1>
+                <div class="post-meta">
+                    ${metadata.date ? formatDate(metadata.date) : ''}
+                    ${metadata.tags ? metadata.tags.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('') : ''}
+                </div>
+                <div class="post-content">${html}</div>
+            `;
+
+            document.getElementById('post-list').style.display = 'none';
+            document.getElementById('post-content').style.display = 'block';
+
+            // Update URL without page reload
+            window.history.pushState({ post: filename }, '', `#${filename.replace('.md', '')}`);
+        }
+
+        function showPostList() {
+            document.getElementById('post-list').style.display = 'block';
+            document.getElementById('post-content').style.display = 'none';
+            window.history.pushState({}, '', '#');
+        }
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.post) {
+                showPost(event.state.post);
+            } else {
+                showPostList();
+            }
+        });
+
+        // Check URL on load
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                const filename = `${hash}.md`;
+                if (posts.some(post => post.file === filename)) {
+                    showPost(filename);
+                    return;
+                }
+            }
+            renderPostList();
+        });
+
+        // Initialize
+        renderPostList();
+    </script>
+</body>
+</html>

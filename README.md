@@ -1,94 +1,54 @@
-# MH11097's Tech Blog
+# Ristretto: An opinionated blog engine
 
-Jekyll-based tech blog with Vietnamese language support, math rendering, and clean design.
+This is the blog engine that powered my blog (https://thefullsnack.com)
 
-## 🚀 Quick Start
+## How to use?
 
-```bash
-# Install dependencies
-make install
+First, compile the generator. You'll need to install Rust (https://rustup.rs/).
 
-# Create new post
-make new-post
-
-# Start development server
-make serve
-
-# Deploy to GitHub Pages
-make deploy
+```
+cd generator-rs
+cargo build
 ```
 
-## 📝 Writing Posts
+The executable binary will be available at `./generator-rs/target/debug/generator-rs` and you can run it via the `gen` symlink in the root folder.
 
-1. Create new post:
-   ```bash
-   ruby new_post.rb "Your Post Title"
-   ```
-
-2. Edit the generated markdown file in `_posts/`
-
-3. Add images to `assets/images/posts/your-post-slug/`
-
-4. Preview locally:
-   ```bash
-   bundle exec jekyll serve
-   ```
-
-## 🔬 Scientific Features
-
-- **Math Rendering**: MathJax 3 support for equations
-- **Code Highlighting**: Rouge with syntax highlighting
-- **Vietnamese Support**: Full UTF-8 and proper fonts
-- **Responsive Design**: Mobile-friendly layout
-- **SEO Optimized**: Meta tags, sitemaps, structured data
-
-## 📄 Post Format
-
-```markdown
----
-layout: post
-title: "Your Post Title"
-date: 2025-08-10 10:00:00 +0700
-categories: [research, programming]
-tags: [python, science, tutorial]
-author: MH11097
-description: "Brief description for SEO"
-math: true
----
-
-# Your Content Here
-
-Math equations: $E = mc^2$
-
-Display math:
-$$
-\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}
-$$
-
-Code blocks:
-```python
-def hello_world():
-    print("Hello, World!")
+```
+./gen posts
 ```
 
-## Commands
+## How to write post?
 
-- `make serve` - Development server
-- `make build` - Production build  
-- `make new-post` - Create new post
-- `make deploy` - Deploy to GitHub Pages
-- `make clean` - Clean build files
+All posts should be located in `./posts` folder, in markdown format. Each post should starts with some metadata:
 
-## Deployment
+**posts/new-post.md**
+```
+---
+title: <string>
+published: true | false | private | guest
+date: YYYY-DD-mm HH:MM:SS
+tags: <string>, <string>,...
+description: <string>
+image: <url to a featured image>
+---
+```
 
-Pushes to `main` branch automatically deploy via GitHub Actions to GitHub Pages.
+## How do I publish a post?
 
-## Tech Stack
+Make sure your `published` field is set to `true` or `private` (generated but not show in homepage) or `guest` (shown as guest post).
 
-- **Jekyll 4.3+** - Static site generator
-- **Ruby 3.1+** - Backend language
-- **Liquid** - Template engine
-- **SASS/SCSS** - CSS preprocessing
-- **MathJax 3** - Math rendering
-- **Rouge** - Syntax highlighting
-- **GitHub Actions** - CI/CD pipeline
+Run the following command:
+
+```
+./gen posts
+```
+
+## Can I preview my post while writing?
+
+Run the previewer:
+
+```
+./gen preview
+```
+
+Then you can go to `http://localhost:3123/view/<file-name-without-the-extension>`, for example: `http://localhost:3123/view/life-with-robot`.
