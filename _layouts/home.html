@@ -4,7 +4,7 @@ layout: default
 
 <div class="home">
   {% if site.posts.size > 0 %}
-    {% for post in paginator.posts %}
+    {% for post in site.posts %}
       <div class='home-list-item'>
         <span class='home-date-indicator'>{{ post.date | date: "%d-%m-%Y" }}</span>
         {% if post.guest %}
@@ -18,17 +18,9 @@ layout: default
       </div>
     {% endfor %}
 
-    {% if paginator.total_pages > 1 %}
+    {% if site.posts.size > 10 %}
       <div class="pagination">
-        {% if paginator.previous_page %}
-          <a href="{{ paginator.previous_page_path | relative_url }}" class="previous">Previous</a>
-        {% endif %}
-        
-        <span class="page_number">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
-        
-        {% if paginator.next_page %}
-          <a href="{{ paginator.next_page_path | relative_url }}" class="next">Next</a>
-        {% endif %}
+        <p>Showing all {{ site.posts.size }} posts</p>
       </div>
     {% endif %}
   {% else %}
