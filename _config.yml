@@ -18,6 +18,11 @@ kramdown:
   hard_wrap: false
   auto_ids: true
 
+# Sass configuration
+sass:
+  sass_dir: _sass
+  style: compressed
+
 # Plugins
 plugins:
   - jekyll-feed
