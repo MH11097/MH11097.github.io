@@ -1,0 +1,76 @@
+# Site settings
+title: "MH11097's Tech Blog"
+email: your.email@domain.com
+description: >-
+  Welcome to my tech blog where I share insights about programming, technology, and development experiences.
+baseurl: ""
+url: "https://MH11097.github.io"
+twitter_username: MH11097
+github_username: MH11097
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-paginate-v2
+
+# Pagination
+pagination:
+  enabled: true
+  per_page: 10
+  permalink: '/page/:num/'
+  title: ':title - page :num'
+  sort_field: 'date'
+  sort_reverse: true
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /posts/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      math: true
+      comments: true
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Scientific settings
+math: true
+code_highlighting: true
+
+# Exclude from processing
+exclude:
+  - .claude/
+  - .serena/
+  - CLAUDE.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Include
+include:
+  - _pages

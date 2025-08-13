@@ -1,0 +1,23 @@
+<header id="user_top" class="cf">
+  <figure id="user_logo" class="active">
+    <a href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+  </figure>
+  <h2><a href="{{ '/' | relative_url }}">{{ site.title | escape }}</a></h2>
+  <h4><span class="name_head">by</span> {{ site.github_username }}</h4>
+  <h3>{{ site.description }} <a href="https://github.com/{{ site.github_username }}">Check out my GitHub</a> for more projects and code samples.</h3>
+  
+  <div class="header-top">
+    <a href="https://github.com/{{ site.github_username }}" rel="noopener noreferrer" target="blank">GitHub</a> |
+    <a href="{{ '/about/' | relative_url }}">About</a> |
+    <a href="{{ '/projects/' | relative_url }}">Projects</a>
+  </div>
+  
+  <div class="searchbox">
+    <div class="search">
+      <form action="https://www.google.com/search" method="get">
+        <input type="text" name="q" placeholder="Search posts..." />
+        <input type="hidden" name="as_sitesearch" value="{{ site.url | remove: 'https://' | remove: 'http://' }}">
+      </form>
+    </div>
+  </div>
+</header>
