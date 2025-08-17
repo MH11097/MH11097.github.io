@@ -1,0 +1,17 @@
+<footer>
+    <div class="container">
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
+        <div class="social">
+            {% if site.github_username %}
+            <a target="_blank" href="https://github.com/{{ site.github_username }}">
+                <i class="icon-github-squared"></i>
+            </a>
+            {% endif %}
+            {% if site.twitter_username %}
+            <a target="_blank" href="https://twitter.com/{{ site.twitter_username }}">
+                <i class="icon-twitter"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</footer>

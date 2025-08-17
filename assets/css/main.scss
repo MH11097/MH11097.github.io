@@ -1,0 +1,16 @@
+---
+---
+
+// Import theme styles
+@import url('theme.css');
+@import url('fontello.css');
+@import url('highlight/tomorrow-night.css');
+@import url('inconsolata.css');
+
+// Additional styles for Jekyll
+body {
+  font-family: 'Inconsolata', monospace;
+}
+
+// Ensure emoji support
+@import url('emoji/css/messenger.min.css');
