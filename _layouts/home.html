@@ -8,7 +8,7 @@ layout: default
     <div class="post-list">
         <h2>Recent Posts</h2>
         
-        {% for post in site.posts %}
+        {% for post in paginator.posts %}
         <div class="post-item">
             <div class="post-title">
                 <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
@@ -28,6 +28,29 @@ layout: default
             {% endif %}
         </div>
         {% endfor %}
+        
+        <!-- Pagination links -->
+        {% if paginator.total_pages > 1 %}
+        <div class="pagination">
+            {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path | relative_url }}">&laquo; Previous</a>
+            {% endif %}
+            
+            {% for page in (1..paginator.total_pages) %}
+            {% if page == paginator.page %}
+            <span class="current">{{ page }}</span>
+            {% elsif page == 1 %}
+            <a href="{{ '/' | relative_url }}">{{ page }}</a>
+            {% else %}
+            <a href="{{ site.paginate_path | replace: ':num', page | relative_url }}">{{ page }}</a>
+            {% endif %}
+            {% endfor %}
+            
+            {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path | relative_url }}">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 </div>
 
@@ -41,4 +64,9 @@ layout: default
 .post-meta { color: #666; font-size: 0.9em; margin-bottom: 10px; }
 .post-excerpt { color: #333; line-height: 1.6; }
 .tag { background: #f0f0f0; padding: 3px 8px; border-radius: 3px; font-size: 0.8em; margin-right: 5px; }
+
+.pagination { text-align: center; margin-top: 30px; }
+.pagination a, .pagination span { display: inline-block; padding: 8px 12px; margin: 0 4px; text-decoration: none; border: 1px solid #ddd; }
+.pagination a:hover { background-color: #f5f5f5; }
+.pagination .current { background-color: #0066cc; color: white; border-color: #0066cc; }
 </style>

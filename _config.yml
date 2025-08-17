@@ -18,21 +18,16 @@ kramdown:
   hard_wrap: false
   auto_ids: true
 
-# Plugins
+# Plugins (GitHub Pages supported only)
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
-  - jekyll-paginate-v2
+  - jekyll-paginate
 
-# Pagination
-pagination:
-  enabled: true
-  per_page: 10
-  permalink: '/page/:num/'
-  title: ':title - page :num'
-  sort_field: 'date'
-  sort_reverse: true
+# Pagination (GitHub Pages style)
+paginate: 10
+paginate_path: "/page:num/"
 
 # Collections
 collections:
