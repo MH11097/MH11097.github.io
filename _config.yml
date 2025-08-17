@@ -58,17 +58,12 @@ defaults:
 math: true
 code_highlighting: true
 
-# Exclude from processing
+# Exclude from processing  
 exclude:
   - .claude/
   - .serena/
   - docs/
-
   - scripts/
-
-
-
-
   - gen
   - Gemfile
   - Gemfile.lock
@@ -77,6 +72,16 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
+  - posts/
+  - css/
+  - js/
+  - font/
+  - img/
+  - emoji/
+  - content/
+  - generator-rs/
+  - templates/
+  - js-QUYNHNN/
 
 # Include
 include:
