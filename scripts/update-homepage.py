@@ -47,7 +47,7 @@ def extract_post_info(html_file):
 
 def update_homepage():
     """Cập nhật trang chủ với danh sách posts"""
-    posts_dir = 'posts'
+    posts_dir = 'content'
     posts = []
     
     # Lấy danh sách file HTML (trừ about.html và projects.html)

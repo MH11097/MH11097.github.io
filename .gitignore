@@ -1,2 +1,33 @@
-posts/*.html
+# Generated HTML files
+content/*.html
 tags/*.html
+
+# AI Assistant Files (keep locally but don't commit)
+.claude/
+.serena/
+CLAUDE.md
+*.ai-*
+*-ai.*
+.ai/
+*.claude
+*.serena
+
+# Environment and Development Files (keep locally but don't commit)
+.env
+.vscode/
+node_modules/
+target/
+gen
+
+# Build artifacts and cache
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db

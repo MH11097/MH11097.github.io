@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Lê Minh Hiếu</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&subset=latin-ext,vietnamese" rel="stylesheet">
+    <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: 'Inconsolata', monospace;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #fafafa;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            padding-bottom: 10px;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .breadcrumb {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav a:hover, .nav a.active {
+            color: #333;
+        }
+        
+        .cv-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .cv-name {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .cv-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .cv-contact {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .cv-contact a {
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .cv-contact a:hover {
+            color: #333;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 40px 0 20px 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+        
+        .experience-item {
+            margin-bottom: 30px;
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .job-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .company {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .job-period {
+            color: #999;
+            font-size: 14px;
+            text-align: right;
+        }
+        
+        .job-description {
+            color: #333;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .achievements {
+            list-style: none !important;
+            list-style-type: none !important;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        
+        .achievements li {
+            list-style: none !important;
+            list-style-type: none !important;
+            margin-bottom: 8px;
+            color: #333;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .achievements li::before {
+            content: "▶" !important;
+            position: absolute;
+            left: 0;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .skills-section {
+            margin-top: 40px;
+        }
+        
+        .skills-list {
+            list-style: none !important;
+            list-style-type: none !important;
+            padding: 0;
+            margin-bottom: 40px;
+        }
+        
+        .skills-list li {
+            list-style: none !important;
+            list-style-type: none !important;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .skills-list li::before {
+            content: none !important;
+        }
+        
+        .skill-number {
+            background: #666;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .skill-content {
+            flex: 1;
+        }
+        
+        .skill-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .skill-desc {
+            color: #666;
+            font-style: italic;
+            font-size: 14px;
+        }
+        
+        .certifications {
+            margin-top: 40px;
+        }
+        
+        .cert-list {
+            list-style: none !important;
+            list-style-type: none !important;
+            padding: 0;
+        }
+        
+        .cert-list li {
+            list-style: none !important;
+            list-style-type: none !important;
+            margin-bottom: 8px;
+            color: #333;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .cert-list li::before {
+            content: "▶" !important;
+            position: absolute;
+            left: 0;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .contact-section {
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .contact-text {
+            color: #333;
+            margin-bottom: 40px;
+        }
+        
+        .contact-links {
+            color: #333;
+        }
+        
+        .contact-links a {
+            color: #333;
+            text-decoration: underline;
+        }
+        
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-family: 'Inconsolata', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .language-toggle:hover {
+            background: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .cv-content {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .cv-content.switching {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .language-indicator {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+        
+        .footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+            margin-top: 60px;
+            text-align: center;
+            gap: 15px;
+        }
+        
+        .footer-quote {
+            font-style: italic;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .footer-contact {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #333;
+        }
+        
+        .print-link {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cv-contact {
+                gap: 15px;
+                flex-direction: column;
+            }
+            
+            .job-header {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .job-period {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="language-toggle" onclick="toggleLanguage()">
+        <span class="language-indicator">🇺🇸</span>
+        English
+    </button>
+
+    <div class="header">
+        <div>
+            <a href="/" class="logo">MH11097</a>
+            <span class="breadcrumb">/cv</span>
+        </div>
+        <nav class="nav">
+            <a href="posts.html">Posts</a>
+            <a href="cv.html" class="active">CV</a>
+        </nav>
+    </div>
+
+    <main class="cv-content" id="cvContent">
+        <div class="cv-header">
+            <h1 class="cv-name">Lê Minh Hiếu</h1>
+            <p class="cv-title">Data Architect</p>
+            <div class="cv-contact">
+                <span>📧 minhhieu111097@gmail.com</span>
+                <span>📱 033.520.9922</span>
+                <span>🌐 <a href="https://mh11097.github.io/">mh11097.github.io</a></span>
+            </div>
+        </div>
+
+        <h2 class="section-title">Education</h2>
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Master: Data Science</div>
+                    <div class="company">Hanoi University of Science, VNU</div>
+                </div>
+                <div class="job-period">Jul 2023 - ongoing</div>
+            </div>
+        </div>
+        
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Bachelor: Investment Economics</div>
+                    <div class="company">National Economics University</div>
+                </div>
+                <div class="job-period">Oct 2016 - May 2020</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Professional Experience</h2>
+        
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Data Architect</div>
+                    <div class="company">Bank for Investment and Development of Vietnam (BIDV)</div>
+                </div>
+                <div class="job-period">Jun 2023 - now</div>
+            </div>
+            <p class="job-description">
+                Leading enterprise data architecture initiatives for Vietnam's largest commercial bank, designing and maintaining critical data infrastructure.
+            </p>
+            <ul class="achievements">
+                <li>Built and managed enterprise Data & Analytics Center serving 100+ users across 3+ business units, handling 25M+ customer records with comprehensive data quality frameworks</li>
+                <li>Led data architecture consulting for hybrid cloud transformation (private cloud/AWS), designing lakehouse solutions and data virtualization to support enterprise banking operations</li>
+                <li>Implemented key data governance projects including Master Data Management (MDM), Data Loss Prevention (DLP), and access control systems to ensure regulatory compliance</li>
+                <li>Created comprehensive ML/AI platform that supports DA, DS, and AI teams with everything from data ingestion and feature engineering to model registry (MLflow) and automated deployment</li>
+                <li>Supported development and deployed 20+ production ML models from a research pipeline of 100+ models, covering customer lead scoring, fraud detection, automated transaction labeling, and research similarity detection</li>
+                <li>Coordinated Gartner consulting engagement to translate strategic recommendations into actionable technical roadmaps</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Data Engineer</div>
+                    <div class="company">Vietnam Payment Solution Jsc. (VNPAY)</div>
+                </div>
+                <div class="job-period">Jun 2022 - Jun 2023</div>
+            </div>
+            <p class="job-description">
+                Built VNPAY Data Center from the ground up, establishing enterprise big data infrastructure for fintech operations.
+            </p>
+            <ul class="achievements">
+                <li>Built VNPAY Data Center from the ground up, establishing enterprise big data infrastructure with Lambda Architecture to support fintech operations and regulatory requirements</li>
+                <li>Developed Customer Data Platform (CDP) with feature store managing 1,000+ features for ML models, enabling real-time customer segmentation and personalized financial services</li>
+                <li>Created production fraud detection system with ML pipeline for transaction monitoring and voucher abuse prevention, helping protect against financial losses</li>
+                <li>Built data crawling infrastructure to support business intelligence and competitive analysis across multiple data sources</li>
+                <li>Established unified data platform that serves Data Analytics, Data Science, and AI teams with centralized access, feature engineering, and automated model deployment</li>
+                <li>Implemented security framework with Kerberos authentication and encryption to meet PCI-DSS compliance for payment data</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Data Engineer</div>
+                    <div class="company">Sapo Technology Jsc.</div>
+                </div>
+                <div class="job-period">Nov 2021 - Jun 2022</div>
+            </div>
+            <p class="job-description">
+                Implemented and operated Lambda Architecture for e-commerce analytics platform.
+            </p>
+            <ul class="achievements">
+                <li>Implemented and operated Lambda Architecture with batch and near real-time processing layers following Data Source → Lake → Warehouse → Mart pattern for e-commerce analytics</li>
+                <li>Ensured data infrastructure delivering both batch and near real-time reports that give merchants insights on sales performance, inventory levels, and customer behavior</li>
+                <li>Researched AI chatbot knowledge-base to help sales staff access product information and provide better customer consultation (pre-production phase)</li>
+                <li>Developed BI reporting based on business requirements, creating automated dashboards for merchant success and platform optimization</li>
+                <li>Implemented robust ETL pipelines with comprehensive data validation and monitoring to ensure high data quality and system reliability</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Data Analyst, Data Engineer</div>
+                    <div class="company">Edso Labs Joint Stock Company</div>
+                </div>
+                <div class="job-period">Oct 2020 - Oct 2021</div>
+            </div>
+            <p class="job-description">
+                Built centralized reporting systems and provided data architecture consulting for government and enterprise clients.
+            </p>
+            <ul class="achievements">
+                <li>Built centralized reporting systems for government agencies, creating unified data platforms that support business intelligence across multiple departments</li>
+                <li>Developed API integration hub for data exchange between state-owned enterprises and private companies</li>
+                <li>Led Data Analytics training programs teaching SQL and Power BI skills to enterprise clients and government teams</li>
+                <li>Provided data architecture consulting across diverse technology stacks and business domains as part of outsourcing engagements</li>
+                <li>Created production ETL workflows with automated data validation and monitoring for mission-critical government and enterprise applications</li>
+            </ul>
+        </div>
+
+        <div class="skills-section">
+            <h2 class="section-title">Technical Skills</h2>
+            <ul class="skills-list">
+                <li>
+                    <div class="skill-number">1</div>
+                    <div class="skill-content">
+                        <div class="skill-name">Big Data & Analytics:</div>
+                        <div class="skill-desc">Hadoop, Spark, Kafka, NiFi, Hive, Iceberg, Airflow, Trino</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="skill-number">2</div>
+                    <div class="skill-content">
+                        <div class="skill-name">Programming Languages:</div>
+                        <div class="skill-desc">Python, Java, Scala, R, SQL</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="skill-number">3</div>
+                    <div class="skill-content">
+                        <div class="skill-name">Databases:</div>
+                        <div class="skill-desc">Oracle, Netezza, MongoDB, ClickHouse, Redis, Qdrant, Elasticsearch</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="skill-number">4</div>
+                    <div class="skill-content">
+                        <div class="skill-name">Data Storage:</div>
+                        <div class="skill-desc">S3, MinIO, HDFS, Data Lake, Lakehouse Architecture</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="skill-number">5</div>
+                    <div class="skill-content">
+                        <div class="skill-name">Machine Learning & AI:</div>
+                        <div class="skill-desc">MLflow, Kedro, Ollama, TensorFlow, PyTorch</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="skill-number">6</div>
+                    <div class="skill-content">
+                        <div class="skill-name">Cloud Platforms:</div>
+                        <div class="skill-desc">AWS, Azure, Docker, Kubernetes, OpenShift</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="skill-number">7</div>
+                    <div class="skill-content">
+                        <div class="skill-name">Visualization & BI:</div>
+                        <div class="skill-desc">Tableau, Power BI, Superset</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="skill-number">8</div>
+                    <div class="skill-content">
+                        <div class="skill-name">Security & Integration:</div>
+                        <div class="skill-desc">Kerberos, REST APIs, GraphQL, Microservices, API Gateway</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="certifications">
+            <h2 class="section-title">Certifications</h2>
+            <ul class="cert-list">
+                <li>DEA-C01: AWS Certified Data Engineer - Associate (2025)</li>
+                <li>DAS-C01: AWS Certified Data Analytics - Specialty (2024)</li>
+                <li>DA-100: Analyzing Data with Microsoft Power BI (2021)</li>
+            </ul>
+        </div>
+
+        <div class="contact-section">
+            <p class="contact-text">For detailed project information or collaboration opportunities, please feel free to get in touch.</p>
+            
+            <p class="contact-links">You can reach me via email at <strong></strong>minhhieu111097@gmail.com</strong> or <strong><a href="https://github.com/MH11097">visit my GitHub</a></strong></p>
+        </div>
+    </main>
+
+    <footer class="footer" id="footerContent">
+        <div>📄 CV - Lê Minh Hiếu | 📧 minhhieu111097@gmail.com | 📱 033.520.9922</div>
+        <a href="#" onclick="window.print()" class="print-link">🖨️ Print/PDF</a>
+    </footer>
+
+    <script src="assets/js/language.js"></script>
+    <script>
+        let currentLang = window.languageManager.getCurrentLang();
+        
+        const cvData = {
+            en: {
+                title: "Data Architect",
+                contact: [
+                    "📧 minhhieu111097@gmail.com",
+                    "📱 033.520.9922", 
+                    "🌐 <a href=\"https://mh11097.github.io/\">mh11097.github.io</a>"
+                ],
+                sections: {
+                    education: "Education",
+                    experience: "Professional Experience", 
+                    skills: "Technical Skills",
+                    certifications: "Certifications"
+                },
+                education: [
+                    {
+                        degree: "Master: Data Science",
+                        school: "Hanoi University of Science, VNU",
+                        period: "Jul 2023 - ongoing"
+                    },
+                    {
+                        degree: "Bachelor: Investment Economics", 
+                        school: "National Economics University",
+                        period: "Oct 2016 - May 2020"
+                    }
+                ],
+                experience: [
+                    {
+                        title: "Data Architect",
+                        company: "Bank for Investment and Development of Vietnam (BIDV)",
+                        period: "Jun 2023 - now",
+                        description: "Leading enterprise data architecture initiatives for Vietnam's largest commercial bank, designing and maintaining critical data infrastructure.",
+                        achievements: [
+                            "Built and managed enterprise Data & Analytics Center serving 100+ users across 3+ business units, handling 25M+ customer records with comprehensive data quality frameworks",
+                            "Led data architecture consulting for hybrid cloud transformation (private cloud/AWS), designing lakehouse solutions and data virtualization to support enterprise banking operations",
+                            "Implemented key data governance projects including Master Data Management (MDM), Data Loss Prevention (DLP), and access control systems to ensure regulatory compliance",
+                            "Created comprehensive ML/AI platform that supports DA, DS, and AI teams with everything from data ingestion and feature engineering to model registry (MLflow) and automated deployment",
+                            "Supported development and deployed 20+ production ML models from a research pipeline of 100+ models, covering customer lead scoring, fraud detection, automated transaction labeling, and research similarity detection",
+                            "Coordinated Gartner consulting engagement to translate strategic recommendations into actionable technical roadmaps"
+                        ]
+                    },
+                    {
+                        title: "Data Engineer",
+                        company: "Vietnam Payment Solution Jsc. (VNPAY)",
+                        period: "Jun 2022 - Jun 2023",
+                        description: "Built VNPAY Data Center from the ground up, establishing enterprise big data infrastructure for fintech operations.",
+                        achievements: [
+                            "Built VNPAY Data Center from the ground up, establishing enterprise big data infrastructure with Lambda Architecture to support fintech operations and regulatory requirements",
+                            "Developed Customer Data Platform (CDP) with feature store managing 1,000+ features for ML models, enabling real-time customer segmentation and personalized financial services",
+                            "Created production fraud detection system with ML pipeline for transaction monitoring and voucher abuse prevention, helping protect against financial losses",
+                            "Built data crawling infrastructure to support business intelligence and competitive analysis across multiple data sources",
+                            "Established unified data platform that serves Data Analytics, Data Science, and AI teams with centralized access, feature engineering, and automated model deployment",
+                            "Implemented security framework with Kerberos authentication and encryption to meet PCI-DSS compliance for payment data"
+                        ]
+                    },
+                    {
+                        title: "Data Engineer",
+                        company: "Sapo Technology Jsc.",
+                        period: "Nov 2021 - Jun 2022",
+                        description: "Implemented and operated Lambda Architecture for e-commerce analytics platform.",
+                        achievements: [
+                            "Implemented and operated Lambda Architecture with batch and near real-time processing layers following Data Source → Lake → Warehouse → Mart pattern for e-commerce analytics",
+                            "Ensured data infrastructure delivering both batch and near real-time reports that give merchants insights on sales performance, inventory levels, and customer behavior",
+                            "Researched AI chatbot knowledge-base to help sales staff access product information and provide better customer consultation (pre-production phase)",
+                            "Developed BI reporting based on business requirements, creating automated dashboards for merchant success and platform optimization",
+                            "Implemented robust ETL pipelines with comprehensive data validation and monitoring to ensure high data quality and system reliability"
+                        ]
+                    },
+                    {
+                        title: "Data Analyst, Data Engineer",
+                        company: "Edso Labs Joint Stock Company",
+                        period: "Oct 2020 - Oct 2021",
+                        description: "Built centralized reporting systems and provided data architecture consulting for government and enterprise clients.",
+                        achievements: [
+                            "Built centralized reporting systems for government agencies, creating unified data platforms that support business intelligence across multiple departments",
+                            "Developed API integration hub for data exchange between state-owned enterprises and private companies",
+                            "Led Data Analytics training programs teaching SQL and Power BI skills to enterprise clients and government teams",
+                            "Provided data architecture consulting across diverse technology stacks and business domains as part of outsourcing engagements",
+                            "Created production ETL workflows with automated data validation and monitoring for mission-critical government and enterprise applications"
+                        ]
+                    }
+                ],
+                skills: [
+                    {name: "Big Data & Analytics:", desc: "Hadoop, Spark, Kafka, NiFi, Hive, Iceberg, Airflow, Trino"},
+                    {name: "Programming Languages:", desc: "Python, Java, Scala, R, SQL"},
+                    {name: "Databases:", desc: "Oracle, Netezza, MongoDB, ClickHouse, Redis, Qdrant, Elasticsearch"},
+                    {name: "Data Storage:", desc: "S3, MinIO, HDFS, Data Lake, Lakehouse Architecture"},
+                    {name: "Machine Learning & AI:", desc: "MLflow, Kedro, Ollama, TensorFlow, PyTorch"},
+                    {name: "Cloud Platforms:", desc: "AWS, Azure, Docker, Kubernetes, OpenShift"},
+                    {name: "Visualization & BI:", desc: "Tableau, Power BI, Superset"},
+                    {name: "Security & Integration:", desc: "Kerberos, REST APIs, GraphQL, Microservices, API Gateway"}
+                ],
+                certifications: [
+                    "DEA-C01: AWS Certified Data Engineer - Associate (2025)",
+                    "DAS-C01: AWS Certified Data Analytics - Specialty (2024)",
+                    "DA-100: Analyzing Data with Microsoft Power BI (2021)"
+                ],
+                contact_text: "For detailed project information or collaboration opportunities, please feel free to get in touch.",
+                contact_links: "You can reach me via email at <strong>minhhieu111097@gmail.com</strong> or <strong><a href=\"https://github.com/MH11097\">visit my GitHub</a></strong>",
+                footer: {
+                    quote: "Data is the new oil, but insights are the refined fuel",
+                    print: "🖨️ Print/PDF",
+                    github: "⚫ GitHub",
+                    telegram: "✈ Telegram", 
+                    email: "✉ Email"
+                }
+            },
+            vi: {
+                title: "Kiến trúc sư Dữ liệu",
+                contact: [
+                    "📧 minhhieu111097@gmail.com",
+                    "📱 033.520.9922",
+                    "🌐 <a href=\"https://mh11097.github.io/\">mh11097.github.io</a>"
+                ],
+                sections: {
+                    education: "Học vấn",
+                    experience: "Kinh nghiệm Nghề nghiệp",
+                    skills: "Kỹ năng Công nghệ",
+                    certifications: "Chứng chỉ"
+                },
+                education: [
+                    {
+                        degree: "Thạc sĩ: Khoa học Dữ liệu",
+                        school: "Trường Đại học Khoa học Tự nhiên, ĐHQGHN",
+                        period: "Tháng 7/2023 - hiện tại"
+                    },
+                    {
+                        degree: "Cử nhân: Kinh tế Đầu tư",
+                        school: "Trường Đại học Kinh tế Quốc dân",
+                        period: "Tháng 10/2016 - Tháng 5/2020"
+                    }
+                ],
+                experience: [
+                    {
+                        title: "Kiến trúc sư Dữ liệu",
+                        company: "Ngân hàng Đầu tư và Phát triển Việt Nam (BIDV)",
+                        period: "Tháng 6/2023 - hiện tại",
+                        description: "Dẫn dắt các sáng kiến kiến trúc dữ liệu doanh nghiệp cho ngân hàng thương mại lớn nhất Việt Nam, thiết kế và duy trì cơ sở hạ tầng dữ liệu quan trọng.",
+                        achievements: [
+                            "Xây dựng và quản lý Trung tâm Dữ liệu & Phân tích doanh nghiệp phục vụ 100+ người dùng trên 3+ đơn vị kinh doanh, xử lý 25M+ hồ sơ khách hàng với khung chất lượng dữ liệu toàn diện",
+                            "Dẫn dắt tư vấn kiến trúc dữ liệu cho chuyển đổi đám mây hybrid (private cloud/AWS), thiết kế giải pháp lakehouse và ảo hóa dữ liệu để hỗ trợ hoạt động ngân hàng doanh nghiệp",
+                            "Triển khai các dự án quản trị dữ liệu chính bao gồm Quản lý Dữ liệu Chính (MDM), Ngăn chặn Mất mát Dữ liệu (DLP), và hệ thống kiểm soát truy cập để đảm bảo tuân thủ quy định",
+                            "Tạo nền tảng ML/AI toàn diện hỗ trợ các nhóm DA, DS, và AI với mọi thứ từ thu thập dữ liệu và kỹ thuật tính năng đến đăng ký mô hình (MLflow) và triển khai tự động",
+                            "Hỗ trợ phát triển và triển khai 20+ mô hình ML sản xuất từ pipeline nghiên cứu 100+ mô hình, bao gồm chấm điểm khách hàng tiềm năng, phát hiện gian lận, gán nhãn giao dịch tự động, và phát hiện tương đồng nghiên cứu",
+                            "Điều phối hợp tác tư vấn Gartner để chuyển đổi khuyến nghị chiến lược thành lộ trình kỹ thuật có thể thực hiện"
+                        ]
+                    },
+                    {
+                        title: "Kỹ sư Dữ liệu",
+                        company: "Công ty Cổ phần Giải pháp Thanh toán Việt Nam (VNPAY)",
+                        period: "Tháng 6/2022 - Tháng 6/2023",
+                        description: "Xây dựng Trung tâm Dữ liệu VNPAY từ đầu, thiết lập cơ sở hạ tầng dữ liệu lớn doanh nghiệp cho hoạt động fintech.",
+                        achievements: [
+                            "Xây dựng Trung tâm Dữ liệu VNPAY từ đầu, thiết lập cơ sở hạ tầng dữ liệu lớn doanh nghiệp với Kiến trúc Lambda để hỗ trợ hoạt động fintech và yêu cầu quy định",
+                            "Phát triển Nền tảng Dữ liệu Khách hàng (CDP) với kho tính năng quản lý 1.000+ tính năng cho các mô hình ML, cho phép phân đoạn khách hàng thời gian thực và dịch vụ tài chính cá nhân hóa",
+                            "Tạo hệ thống phát hiện gian lận sản xuất với pipeline ML để giám sát giao dịch và ngăn chặn lạm dụng voucher, giúp bảo vệ chống tổn thất tài chính",
+                            "Xây dựng cơ sở hạ tầng thu thập dữ liệu để hỗ trợ business intelligence và phân tích cạnh tranh trên nhiều nguồn dữ liệu",
+                            "Thiết lập nền tảng dữ liệu thống nhất phục vụ các nhóm Data Analytics, Data Science, và AI với truy cập tập trung, kỹ thuật tính năng, và triển khai mô hình tự động",
+                            "Triển khai khung bảo mật với xác thực Kerberos và mã hóa để đáp ứng tuân thủ PCI-DSS cho dữ liệu thanh toán"
+                        ]
+                    },
+                    {
+                        title: "Kỹ sư Dữ liệu",
+                        company: "Công ty Cổ phần Công nghệ Sapo",
+                        period: "Tháng 11/2021 - Tháng 6/2022",
+                        description: "Triển khai và vận hành Kiến trúc Lambda cho nền tảng phân tích thương mại điện tử.",
+                        achievements: [
+                            "Triển khai và vận hành Kiến trúc Lambda với các lớp xử lý batch và gần thời gian thực theo mô hình Nguồn Dữ liệu → Lake → Warehouse → Mart cho phân tích thương mại điện tử",
+                            "Đảm bảo cơ sở hạ tầng dữ liệu cung cấp cả báo cáo batch và gần thời gian thực cho các thương gia thông tin về hiệu suất bán hàng, mức tồn kho, và hành vi khách hàng",
+                            "Nghiên cứu cơ sở tri thức chatbot AI để giúp nhân viên bán hàng truy cập thông tin sản phẩm và cung cấp tư vấn khách hàng tốt hơn (giai đoạn tiền sản xuất)",
+                            "Phát triển báo cáo BI dựa trên yêu cầu kinh doanh, tạo dashboard tự động cho thành công thương gia và tối ưu hóa nền tảng",
+                            "Triển khai pipeline ETL mạnh mẽ với xác thực và giám sát dữ liệu toàn diện để đảm bảo chất lượng dữ liệu cao và độ tin cậy hệ thống"
+                        ]
+                    },
+                    {
+                        title: "Phân tích viên Dữ liệu, Kỹ sư Dữ liệu",
+                        company: "Công ty Cổ phần Edso Labs",
+                        period: "Tháng 10/2020 - Tháng 10/2021",
+                        description: "Xây dựng hệ thống báo cáo tập trung và cung cấp tư vấn kiến trúc dữ liệu cho khách hàng chính phủ và doanh nghiệp.",
+                        achievements: [
+                            "Xây dựng hệ thống báo cáo tập trung cho các cơ quan chính phủ, tạo nền tảng dữ liệu thống nhất hỗ trợ business intelligence trên nhiều phòng ban",
+                            "Phát triển hub tích hợp API để trao đổi dữ liệu giữa các doanh nghiệp nhà nước và công ty tư nhân",
+                            "Dẫn dắt các chương trình đào tạo Data Analytics dạy kỹ năng SQL và Power BI cho khách hàng doanh nghiệp và nhóm chính phủ",
+                            "Cung cấp tư vấn kiến trúc dữ liệu trên các stack công nghệ và lĩnh vực kinh doanh đa dạng như một phần của cam kết outsourcing",
+                            "Tạo quy trình ETL sản xuất với xác thực và giám sát dữ liệu tự động cho các ứng dụng chính phủ và doanh nghiệp có tính quan trọng cao"
+                        ]
+                    }
+                ],
+                skills: [
+                    {name: "Big Data & Phân tích:", desc: "Hadoop, Spark, Kafka, NiFi, Hive, Iceberg, Airflow, Trino"},
+                    {name: "Ngôn ngữ Lập trình:", desc: "Python, Java, Scala, R, SQL"},
+                    {name: "Cơ sở Dữ liệu:", desc: "Oracle, Netezza, MongoDB, ClickHouse, Redis, Qdrant, Elasticsearch"},
+                    {name: "Lưu trữ Dữ liệu:", desc: "S3, MinIO, HDFS, Data Lake, Kiến trúc Lakehouse"},
+                    {name: "Machine Learning & AI:", desc: "MLflow, Kedro, Ollama, TensorFlow, PyTorch"},
+                    {name: "Nền tảng Đám mây:", desc: "AWS, Azure, Docker, Kubernetes, OpenShift"},
+                    {name: "Trực quan hóa & BI:", desc: "Tableau, Power BI, Superset"},
+                    {name: "Bảo mật & Tích hợp:", desc: "Kerberos, REST APIs, GraphQL, Microservices, API Gateway"}
+                ],
+                certifications: [
+                    "DEA-C01: AWS Certified Data Engineer - Associate (2025)",
+                    "DAS-C01: AWS Certified Data Analytics - Specialty (2024)", 
+                    "DA-100: Analyzing Data with Microsoft Power BI (2021)"
+                ],
+                contact_text: "Để biết thông tin dự án chi tiết hoặc cơ hội hợp tác, vui lòng liên hệ.",
+                contact_links: "Bạn có thể liên hệ với tôi qua email <strong>minhhieu111097@gmail.com</strong> hoặc <strong><a href=\"https://github.com/MH11097\">ghé thăm GitHub của tôi</a></strong>",
+                footer: {
+                    quote: "Dữ liệu là dầu mỏ mới, nhưng thông tin chi tiết là nhiên liệu tinh chế",
+                    contact: "📄 Sơ yếu Lý lịch - Lê Minh Hiếu | ✉ minhhieu111097@gmail.com | ☎ •••••••••••",
+                    print: "🖨️ In/PDF",
+                    github: "⚫ GitHub",
+                    telegram: "✈ Telegram", 
+                    email: "✉ Email"
+                }
+            }
+        };
+
+        function renderCV(lang) {
+            const data = cvData[lang];
+            const content = document.getElementById('cvContent');
+            
+            content.innerHTML = `
+                <div class="cv-header">
+                    <h1 class="cv-name">Lê Minh Hiếu</h1>
+                    <p class="cv-title">${data.title}</p>
+                    <div class="cv-contact">
+                        ${data.contact.map(contact => `<span>${contact}</span>`).join('')}
+                    </div>
+                </div>
+
+                <h2 class="section-title">${data.sections.education}</h2>
+                ${data.education.map(edu => `
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <div>
+                                <div class="job-title">${edu.degree}</div>
+                                <div class="company">${edu.school}</div>
+                            </div>
+                            <div class="job-period">${edu.period}</div>
+                        </div>
+                    </div>
+                `).join('')}
+
+                <h2 class="section-title">${data.sections.experience}</h2>
+                ${data.experience.map(exp => `
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <div>
+                                <div class="job-title">${exp.title}</div>
+                                <div class="company">${exp.company}</div>
+                            </div>
+                            <div class="job-period">${exp.period}</div>
+                        </div>
+                        <p class="job-description">${exp.description}</p>
+                        <ul class="achievements">
+                            ${exp.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('')}
+
+                <div class="skills-section">
+                    <h2 class="section-title">${data.sections.skills}</h2>
+                    <ul class="skills-list">
+                        ${data.skills.map((skill, index) => `
+                            <li>
+                                <div class="skill-number">${index + 1}</div>
+                                <div class="skill-content">
+                                    <div class="skill-name">${skill.name}</div>
+                                    <div class="skill-desc">${skill.desc}</div>
+                                </div>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <div class="certifications">
+                    <h2 class="section-title">${data.sections.certifications}</h2>
+                    <ul class="cert-list">
+                        ${data.certifications.map(cert => `<li>${cert}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="contact-section">
+                    <p class="contact-text">${data.contact_text}</p>
+                    <p class="contact-links">${data.contact_links}</p>
+                </div>
+            `;
+            
+            // Update footer
+            const footer = document.getElementById('footerContent');
+            if (footer) {
+                footer.innerHTML = `
+                    <div class="footer-quote">"${data.footer.quote}"</div>
+                    <div class="footer-contact">${data.footer.contact}</div>
+                    <div class="footer-links">
+                        <a href="https://github.com/MH11097">${data.footer.github}</a>
+                        <a href="https://t.me/mh11097">${data.footer.telegram}</a>
+                        <a href="mailto:minhhieu111097@gmail.com">${data.footer.email}</a>
+                        <a href="#" onclick="window.print()" class="print-link">${data.footer.print}</a>
+                    </div>
+                `;
+            }
+        }
+
+        // Listen for language changes from global manager
+        window.addEventListener('languageChanged', (e) => {
+            const content = document.getElementById('cvContent');
+            content.classList.add('switching');
+            
+            setTimeout(() => {
+                currentLang = e.detail.lang;
+                renderCV(currentLang);
+                
+                // Update navigation
+                const navPosts = document.querySelector('nav a[href="posts.html"]');
+                const breadcrumb = document.querySelector('.breadcrumb');
+                
+                if (e.detail.lang === 'vi') {
+                    if (navPosts) navPosts.textContent = 'Bài viết';
+                    if (breadcrumb) breadcrumb.textContent = '/cv';
+                } else {
+                    if (navPosts) navPosts.textContent = 'Posts';
+                    if (breadcrumb) breadcrumb.textContent = '/cv';
+                }
+                
+                setTimeout(() => {
+                    content.classList.remove('switching');
+                }, 50);
+            }, 200);
+        });
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCV(currentLang);
+            
+            // Update navigation on load
+            const navPosts = document.querySelector('nav a[href="posts.html"]');
+            const breadcrumb = document.querySelector('.breadcrumb');
+            
+            if (currentLang === 'vi') {
+                if (navPosts) navPosts.textContent = 'Bài viết';
+                if (breadcrumb) breadcrumb.textContent = '/CV';
+            }
+        });
+    </script>
+</body>
+</html>

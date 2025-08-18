@@ -1,0 +1,343 @@
+<aside class="sidebar">
+    <!-- Mobile Menu Toggle -->
+    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+    </div>
+
+    <!-- Terminal-style Header -->
+    <div class="sidebar-header terminal-header">
+        <div class="terminal-window">
+            <div class="terminal-controls">
+                <span class="control close"></span>
+                <span class="control minimize"></span>
+                <span class="control maximize"></span>
+            </div>
+            <div class="terminal-content">
+                <div class="terminal-line">
+                    <span class="prompt">mh11097@blog:~$</span>
+                    <span class="command typing-animation">whoami</span>
+                </div>
+                <div class="terminal-output">
+                    <div class="profile-avatar">
+                        <img src="{{ '/assets/images/avatar.jpg' | relative_url }}" alt="MH11097" class="avatar-img">
+                    </div>
+                    <div class="user-info">
+                        <div class="name">MH11097</div>
+                        <div class="role">Data Engineer @ BIDV</div>
+                        <div class="status">
+                            <span class="status-indicator"></span>
+                            <span class="status-text">coding...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="terminal-line system-info">
+                    <span class="prompt">mh11097@blog:~$</span>
+                    <span class="command">cat /proc/blog_info</span>
+                </div>
+                <div class="system-stats">
+                    <div class="stat">
+                        <span class="label">Uptime:</span>
+                        <span class="value" id="uptime">Loading...</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Posts:</span>
+                        <span class="value">{{ site.posts.size }}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Coffee:</span>
+                        <span class="value">∞ ☕</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="sidebar-nav">
+        <div class="nav-header">
+            <span class="nav-title">// Navigation</span>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">
+                    <i class="icon-home"></i>
+                    <span>~/home</span>
+                    <span class="nav-indicator"></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ '/posts.html' | relative_url }}" class="nav-link {% if page.url contains 'posts' %}active{% endif %}">
+                    <i class="icon-doc-text"></i>
+                    <span>~/posts</span>
+                    <span class="nav-indicator"></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ '/tags.html' | relative_url }}" class="nav-link {% if page.url contains 'tags' %}active{% endif %}">
+                    <i class="icon-tag"></i>
+                    <span>~/tags</span>
+                    <span class="nav-indicator"></span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ '/cv.html' | relative_url }}" class="nav-link {% if page.url contains 'cv' %}active{% endif %}">
+                    <i class="icon-doc"></i>
+                    <span>~/cv</span>
+                    <span class="nav-indicator"></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Enhanced Tags Cloud -->
+    <div class="sidebar-section">
+        <h4 class="section-title">
+            <i class="icon-tag"></i>
+            <span>// Popular Tags</span>
+        </h4>
+        <div class="tags-cloud enhanced">
+            {% assign sorted_tags = site.tags | sort %}
+            {% for tag in sorted_tags limit: 15 %}
+                {% assign tag_posts_count = tag[1].size %}
+                {% assign tag_weight = tag_posts_count | times: 4 | divided_by: site.tags.size | plus: 1 %}
+                <a href="{{ '/tags.html#' | append: tag[0] | relative_url }}" 
+                   class="tag-item weight-{{ tag_weight }}" 
+                   data-count="{{ tag_posts_count }}"
+                   title="{{ tag_posts_count }} bài viết">
+                    <span class="tag-name">{{ tag[0] }}</span>
+                    <span class="tag-count">{{ tag_posts_count }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="sidebar-section">
+        <h4 class="section-title">
+            <i class="icon-clock"></i>
+            <span>// Recent Activity</span>
+        </h4>
+        <ul class="recent-posts enhanced">
+            {% for post in site.posts limit: 5 %}
+                <li class="recent-post-item">
+                    <a href="{{ post.url | relative_url }}" class="recent-post-link">
+                        <div class="post-indicator"></div>
+                        <div class="post-content">
+                            <span class="recent-post-date">{{ post.date | date: "%d.%m.%Y" }}</span>
+                            <span class="recent-post-title">{{ post.title | truncate: 35 }}</span>
+                            {% if post.tags.size > 0 %}
+                                <div class="post-mini-tags">
+                                    {% for tag in post.tags limit: 2 %}
+                                        <span class="mini-tag">{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Enhanced Social Links -->
+    <div class="sidebar-section">
+        <h4 class="section-title">
+            <i class="icon-share"></i>
+            <span>// Connect</span>
+        </h4>
+        <div class="social-links enhanced">
+            <a href="https://github.com/MH11097" target="_blank" class="social-link github" title="GitHub" data-platform="github">
+                <i class="icon-github-squared"></i>
+                <span class="social-label">GitHub</span>
+                <div class="social-hover-effect"></div>
+            </a>
+            <a href="https://linkedin.com/in/mh11097" target="_blank" class="social-link linkedin" title="LinkedIn" data-platform="linkedin">
+                <i class="icon-linkedin"></i>
+                <span class="social-label">LinkedIn</span>
+                <div class="social-hover-effect"></div>
+            </a>
+            <a href="https://twitter.com/mh11097" target="_blank" class="social-link twitter" title="Twitter" data-platform="twitter">
+                <i class="icon-twitter"></i>
+                <span class="social-label">Twitter</span>
+                <div class="social-hover-effect"></div>
+            </a>
+            <a href="mailto:contact@mh11097.rocks" class="social-link email" title="Email" data-platform="email">
+                <i class="icon-mail-alt"></i>
+                <span class="social-label">Email</span>
+                <div class="social-hover-effect"></div>
+            </a>
+            <a href="{{ '/rss.xml' | relative_url }}" class="social-link rss" title="RSS Feed" data-platform="rss">
+                <i class="icon-rss"></i>
+                <span class="social-label">RSS</span>
+                <div class="social-hover-effect"></div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Terminal Footer -->
+    <div class="sidebar-footer terminal-footer">
+        <div class="footer-line">
+            <span class="prompt">mh11097@blog:~$</span>
+            <span class="command">cat /etc/motd</span>
+        </div>
+        <div class="footer-content">
+            <div class="ascii-art">
+    ╔═══════════════════════════════╗
+    ║         MH11097 Blog          ║
+    ║      Built with Jekyll        ║
+    ║         © 2025 ♥             ║
+    ╚═══════════════════════════════╝
+            </div>
+            <div class="system-status">
+                <div class="status-item">
+                    <span class="indicator green"></span>
+                    <span>System: ONLINE</span>
+                </div>
+                <div class="status-item">
+                    <span class="indicator blue"></span>
+                    <span>Blog: ACTIVE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Shadow -->
+    <div class="scroll-shadow top" id="scroll-shadow-top"></div>
+    <div class="scroll-shadow bottom" id="scroll-shadow-bottom"></div>
+</aside>
+
+<!-- Sidebar JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const container = document.querySelector('.container');
+    
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('mobile-open');
+            container.classList.toggle('sidebar-open');
+            mobileToggle.classList.toggle('active');
+        });
+    }
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768 && 
+            !sidebar.contains(e.target) && 
+            !mobileToggle.contains(e.target) &&
+            sidebar.classList.contains('mobile-open')) {
+            sidebar.classList.remove('mobile-open');
+            container.classList.remove('sidebar-open');
+            mobileToggle.classList.remove('active');
+        }
+    });
+    
+    // Typing animation
+    function typeText(element, text, speed = 100) {
+        let i = 0;
+        element.textContent = '';
+        function type() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+    
+    // Start typing animation after a short delay
+    setTimeout(() => {
+        const typingElement = document.querySelector('.typing-animation');
+        if (typingElement) {
+            typeText(typingElement, 'whoami', 80);
+        }
+    }, 1000);
+    
+    // Uptime calculation
+    function updateUptime() {
+        const startDate = new Date('2025-01-01'); // Blog start date
+        const now = new Date();
+        const diffTime = Math.abs(now - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        const uptimeElement = document.getElementById('uptime');
+        if (uptimeElement) {
+            uptimeElement.textContent = `${diffDays} days`;
+        }
+    }
+    
+    updateUptime();
+    
+    // Scroll shadows
+    function updateScrollShadows() {
+        const sidebar = document.querySelector('.sidebar');
+        const topShadow = document.getElementById('scroll-shadow-top');
+        const bottomShadow = document.getElementById('scroll-shadow-bottom');
+        
+        if (!sidebar || !topShadow || !bottomShadow) return;
+        
+        const scrollTop = sidebar.scrollTop;
+        const scrollHeight = sidebar.scrollHeight;
+        const clientHeight = sidebar.clientHeight;
+        const maxScroll = scrollHeight - clientHeight;
+        
+        // Top shadow
+        if (scrollTop > 10) {
+            topShadow.style.opacity = Math.min(scrollTop / 50, 1);
+        } else {
+            topShadow.style.opacity = 0;
+        }
+        
+        // Bottom shadow
+        if (scrollTop < maxScroll - 10) {
+            bottomShadow.style.opacity = Math.min((maxScroll - scrollTop) / 50, 1);
+        } else {
+            bottomShadow.style.opacity = 0;
+        }
+    }
+    
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+        sidebar.addEventListener('scroll', updateScrollShadows);
+        // Initial check
+        setTimeout(updateScrollShadows, 100);
+    }
+    
+    // Status animation
+    function animateStatus() {
+        const statusTexts = ['coding...', 'learning...', 'building...', 'exploring...'];
+        const statusElement = document.querySelector('.status-text');
+        let currentIndex = 0;
+        
+        if (statusElement) {
+            setInterval(() => {
+                statusElement.style.opacity = '0';
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % statusTexts.length;
+                    statusElement.textContent = statusTexts[currentIndex];
+                    statusElement.style.opacity = '1';
+                }, 300);
+            }, 3000);
+        }
+    }
+    
+    animateStatus();
+    
+    // Tag click tracking
+    document.querySelectorAll('.tag-item').forEach(tag => {
+        tag.addEventListener('click', function() {
+            // Add click animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+});
+</script>

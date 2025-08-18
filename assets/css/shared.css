@@ -1,0 +1,172 @@
+/* Shared CSS Components */
+
+/* Common Typography */
+body {
+    font-family: 'Inconsolata', monospace;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #fafafa;
+}
+
+/* Header Components */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+    padding-bottom: 10px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    text-decoration: none;
+}
+
+.breadcrumb {
+    color: #999;
+    font-size: 14px;
+}
+
+/* Navigation Components */
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.nav a:hover, .nav a.active {
+    color: #333;
+}
+
+/* Language Toggle */
+.language-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-family: 'Inconsolata', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.language-toggle:hover {
+    background: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.language-indicator {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+/* Content Transitions */
+.main-content {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.main-content.switching {
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+.cv-content {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.cv-content.switching {
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+/* Footer Components */
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    border-top: 1px solid #eee;
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    gap: 15px;
+    margin-top: 60px;
+}
+
+.footer-quote {
+    font-style: italic;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.footer-contact {
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #333;
+}
+
+.print-link {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .nav {
+        gap: 20px;
+    }
+    
+    .footer-links {
+        gap: 15px;
+        flex-direction: column;
+    }
+}

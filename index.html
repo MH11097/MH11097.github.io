@@ -3,230 +3,375 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hieu Le Minh's Blog</title>
+    <title>MH11097 - Lê Minh Hiếu</title>
     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&subset=latin-ext,vietnamese" rel="stylesheet">
-    <link href="css/theme.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/highlight/tomorrow-night.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/shared.css" rel="stylesheet" type="text/css">
     <style>
-        .post-list { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .post-item { border-bottom: 1px solid #eee; padding: 20px 0; }
-        .post-item:last-child { border-bottom: none; }
-        .post-title { font-size: 1.5em; margin-bottom: 10px; }
-        .post-title a { text-decoration: none; color: #333; }
-        .post-title a:hover { color: #0066cc; }
-        .post-meta { color: #666; font-size: 0.9em; margin-bottom: 10px; }
-        .post-excerpt { color: #333; line-height: 1.6; }
-        .post-tags { margin-top: 10px; }
-        .tag { background: #f0f0f0; padding: 3px 8px; border-radius: 3px; font-size: 0.8em; margin-right: 5px; }
-        #post-content { max-width: 800px; margin: 0 auto; padding: 20px; display: none; }
-        .back-button { margin-bottom: 20px; }
-        .back-button a { color: #0066cc; text-decoration: none; }
+        /* Page-specific styles only */
+        
+        .main-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: #666;
+        }
+        
+        .intro-text {
+            font-size: 16px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        
+        .projects-list {
+            list-style: none !important;
+            list-style-type: none !important;
+            padding: 0;
+            margin-bottom: 60px;
+        }
+        
+        .projects-list li {
+            list-style: none !important;
+            list-style-type: none !important;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .projects-list li::before {
+            content: none !important;
+        }
+        
+        .project-number {
+            background: #666;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .project-content {
+            flex: 1;
+        }
+        
+        .project-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .project-desc {
+            color: #666;
+            font-style: italic;
+            font-size: 14px;
+        }
+        
+        .contact-text {
+            color: #333;
+            margin-bottom: 40px;
+        }
+        
+        .contact-links {
+            color: #333;
+        }
+        
+        .contact-links a {
+            color: #333;
+            text-decoration: underline;
+        }
+        
+        .footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+            gap: 15px;
+        }
+        
+        .footer-quote {
+            font-style: italic;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #333;
+        }
+        
+        .rss-link {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-family: 'Inconsolata', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .language-toggle:hover {
+            background: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .language-indicator {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+        
+        .main-content {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .main-content.switching {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
     </style>
 </head>
 <body>
-    <header id="user_top" class="cf">
-        <figure id="user_logo" class="active"><a href="https://mh11097.github.io">Hieu Le Minh's Blog</a></figure>
-        <h2><a href="https://mh11097.github.io">Hieu Le Minh's Blog</a></h2>
-        <h4><span class="name_head">by</span> Hieu Le Minh (MH11097)</h4>
-        <h3>Data Engineer at <a href="https://bidv.com.vn/" target="_blank">BIDV</a>. Passionate about data architecture, ETL flows, and learning to become DataDevSecOps.</h3>
-    </header>
+    <button class="language-toggle" onclick="toggleLanguage()">
+        <span class="language-indicator">🇺🇸</span>
+        English
+    </button>
 
-    <div id="blog-content">
-        <div id="post-list" class="post-list">
-            <h2>Recent Posts</h2>
-            <div id="posts-container"></div>
-        </div>
-
-        <div id="post-content">
-            <div class="back-button">
-                <a href="#" onclick="showPostList()">&larr; Back to posts</a>
-            </div>
-            <div id="single-post"></div>
-        </div>
+    <div class="header">
+        <a href="/" class="logo">MH11097</a>
+        <nav class="nav">
+            <a href="posts.html" data-en="Posts" data-vi="Bài viết">Posts</a>
+            <a href="cv.html">CV</a>
+        </nav>
     </div>
 
-    <script>
-        // Configure marked for syntax highlighting
-        marked.setOptions({
-            highlight: function(code, lang) {
-                if (lang && hljs.getLanguage(lang)) {
-                    return hljs.highlight(code, { language: lang }).value;
-                }
-                return hljs.highlightAuto(code).value;
-            }
-        });
-
-        // List of posts (automatically generated from posts directory)
-        const posts = [
-            {
-                file: 'life-with-robot.md',
-                title: 'Lái xe với robot',
-                date: '2018-05-12',
-                tags: ['random'],
-                description: 'Con người sống chung với robot y như trong phim khoa học viễn tưởng...'
-            },
-            {
-                file: 'john-pin-problem.md',
-                title: 'Thuật toán phục hồi số hữu tỉ và bài toán John\'s PIN',
-                date: '2023-03-15',
-                tags: ['math', 'algorithm'],
-                description: 'Giải thuật thú vị về việc phục hồi số hữu tỉ...'
-            },
-            {
-                file: 'lap-trinh-va-toan-hoc.md',
-                title: 'Lập trình và Toán học',
-                date: '2017-10-10',
-                tags: ['opinion', 'random', 'math', 'algorithm'],
-                description: 'Mối quan hệ giữa lập trình và toán học...'
-            },
-            {
-                file: 'rust-binary-tree-traversal.md',
-                title: 'Binary Tree Traversal in Rust',
-                date: '2023-08-01',
-                tags: ['rust', 'algorithm', 'data-structures'],
-                description: 'Implementation and examples of binary tree traversal algorithms in Rust...'
-            },
-            {
-                file: 'mo-hinh-toan.md',
-                title: 'Mô hình toán',
-                date: '2023-06-15',
-                tags: ['math', 'modeling'],
-                description: 'Khám phá các mô hình toán học trong thực tế...'
-            },
-            {
-                file: 'open-source-license.md',
-                title: 'Open Source License',
-                date: '2023-05-20',
-                tags: ['open-source', 'license'],
-                description: 'Tìm hiểu về các loại license open source...'
-            }
-        ];
-
-        async function loadPost(filename) {
-            try {
-                const response = await fetch(`posts/${filename}`);
-                const text = await response.text();
-                return text;
-            } catch (error) {
-                console.error('Error loading post:', error);
-                return null;
-            }
-        }
-
-        function parseMarkdownMetadata(content) {
-            const lines = content.split('\n');
-            if (lines[0] === '---') {
-                const endIndex = lines.findIndex((line, index) => index > 0 && line === '---');
-                if (endIndex > 0) {
-                    const metadata = {};
-                    const metadataLines = lines.slice(1, endIndex);
-                    metadataLines.forEach(line => {
-                        const [key, ...valueParts] = line.split(':');
-                        if (key && valueParts.length > 0) {
-                            metadata[key.trim()] = valueParts.join(':').trim();
-                        }
-                    });
-                    const markdown = lines.slice(endIndex + 1).join('\n');
-                    return { metadata, markdown };
-                }
-            }
-            return { metadata: {}, markdown: content };
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('vi-VN');
-        }
-
-        function renderPostList() {
-            const container = document.getElementById('posts-container');
-            container.innerHTML = '';
-
-            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            posts.forEach(post => {
-                const postElement = document.createElement('div');
-                postElement.className = 'post-item';
-                
-                const tagsHtml = post.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-                
-                postElement.innerHTML = `
-                    <div class="post-title">
-                        <a href="#" onclick="showPost('${post.file}')">${post.title}</a>
-                    </div>
-                    <div class="post-meta">
-                        ${formatDate(post.date)}
-                    </div>
-                    <div class="post-excerpt">
-                        ${post.description}
-                    </div>
-                    <div class="post-tags">
-                        ${tagsHtml}
-                    </div>
-                `;
-                
-                container.appendChild(postElement);
-            });
-        }
-
-        async function showPost(filename) {
-            const content = await loadPost(filename);
-            if (!content) {
-                alert('Could not load post');
-                return;
-            }
-
-            const { metadata, markdown } = parseMarkdownMetadata(content);
-            const html = marked.parse(markdown);
-
-            document.getElementById('single-post').innerHTML = `
-                <h1>${metadata.title || 'Untitled'}</h1>
-                <div class="post-meta">
-                    ${metadata.date ? formatDate(metadata.date) : ''}
-                    ${metadata.tags ? metadata.tags.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('') : ''}
+    <main class="main-content" id="mainContent">
+        <h1 class="main-title">Hello! I'm Hieu!</h1>
+        <p class="subtitle">Look like you've found my space on the internet.</p>
+        
+        <p class="intro-text">I'm a Data Architect at BIDV, passionate about building scalable data platforms, ML/AI systems, and enterprise data architecture. I specialize in big data technologies, cloud infrastructure, and helping organizations unlock the power of their data.</p>
+        
+        <ul class="projects-list">
+            <li>
+                <div class="project-number">1</div>
+                <div class="project-content">
+                    <div class="project-name">Enterprise Data & Analytics Center:</div>
+                    <div class="project-desc">Built and managed data center serving 100+ users across 3+ business units with 25M+ customer records</div>
                 </div>
-                <div class="post-content">${html}</div>
+            </li>
+            <li>
+                <div class="project-number">2</div>
+                <div class="project-content">
+                    <div class="project-name">ML/AI Platform Development:</div>
+                    <div class="project-desc">Created comprehensive ML/AI platform with MLflow, deployed 20+ production models from 100+ research pipeline</div>
+                </div>
+            </li>
+            <li>
+                <div class="project-number">3</div>
+                <div class="project-content">
+                    <div class="project-name">Hybrid Cloud Data Architecture:</div>
+                    <div class="project-desc">Leading data architecture consulting for hybrid cloud transformation with lakehouse solutions</div>
+                </div>
+            </li>
+            <li>
+                <div class="project-number">4</div>
+                <div class="project-content">
+                    <div class="project-name">Data Governance & Compliance:</div>
+                    <div class="project-desc">Implemented MDM, DLP, and access control systems to ensure regulatory compliance</div>
+                </div>
+            </li>
+            <li>
+                <div class="project-number">5</div>
+                <div class="project-content">
+                    <div class="project-name">Customer Data Platform (CDP):</div>
+                    <div class="project-desc">Developed CDP with feature store managing 1,000+ features for ML models at VNPAY</div>
+                </div>
+            </li>
+            <li>
+                <div class="project-number">6</div>
+                <div class="project-content">
+                    <div class="project-name">Technical Blog & Knowledge Sharing:</div>
+                    <div class="project-desc">Writing about data engineering, ML/AI, and technology insights</div>
+                </div>
+            </li>
+        </ul>
+        
+        <p class="contact-text">Most of my other projects don't have a detailed development log, but please feel free to check them on GitHub.</p>
+        
+        <p class="contact-links">In case you're interested, you can reach me via email at <strong>minhhieu111097@gmail.com</strong> or <strong><a href="https://github.com/MH11097">visit my GitHub</a></strong></p>
+    </main>
+
+    <footer class="footer" id="footerContent">
+        <div>🏠 @MH11097</div>
+        <a href="rss.xml" class="rss-link">📡 RSS</a>
+    </footer>
+
+    <script src="assets/js/language.js"></script>
+    <script src="assets/js/shared-data.js"></script>
+    <script>
+        const homeData = {
+            en: {
+                title: "Hello! I'm Hieu!",
+                subtitle: "Look like you've found my space on the internet.",
+                intro: "I'm a Data Architect at BIDV, passionate about building scalable data platforms, ML/AI systems, and enterprise data architecture. I specialize in big data technologies, cloud infrastructure, and helping organizations unlock the power of their data.",
+                projects: [
+                    {
+                        name: "Enterprise Data & Analytics Center:",
+                        desc: "Built and managed data center serving 100+ users across 3+ business units with 25M+ customer records"
+                    },
+                    {
+                        name: "ML/AI Platform Development:",
+                        desc: "Created comprehensive ML/AI platform with MLflow, deployed 20+ production models from 100+ research pipeline"
+                    },
+                    {
+                        name: "Hybrid Cloud Data Architecture:",
+                        desc: "Leading data architecture consulting for hybrid cloud transformation with lakehouse solutions"
+                    },
+                    {
+                        name: "Data Governance & Compliance:",
+                        desc: "Implemented MDM, DLP, and access control systems to ensure regulatory compliance"
+                    },
+                    {
+                        name: "Customer Data Platform (CDP):",
+                        desc: "Developed CDP with feature store managing 1,000+ features for ML models at VNPAY"
+                    },
+                    {
+                        name: "Technical Blog & Knowledge Sharing:",
+                        desc: "Writing about data engineering, ML/AI, and technology insights"
+                    }
+                ],
+                contactText: "Most of my other projects don't have a detailed development log, but please feel free to check them on GitHub.",
+                contactLinks: "In case you're interested, you can reach me via email at <strong>minhhieu111097@gmail.com</strong> or <strong><a href=\"https://github.com/MH11097\">visit my GitHub</a></strong>"
+            },
+            vi: {
+                title: "Xin chào! Tôi là Hiếu!",
+                subtitle: "Có vẻ như bạn đã tìm thấy không gian của tôi trên internet.",
+                intro: "Tôi là Kiến trúc sư Dữ liệu tại BIDV, đam mê xây dựng các nền tảng dữ liệu có thể mở rộng, hệ thống ML/AI, và kiến trúc dữ liệu doanh nghiệp. Tôi chuyên về công nghệ big data, cơ sở hạ tầng đám mây, và giúp các tổ chức khai thác sức mạnh của dữ liệu.",
+                projects: [
+                    {
+                        name: "Trung tâm Dữ liệu & Phân tích Doanh nghiệp:",
+                        desc: "Xây dựng và quản lý trung tâm dữ liệu phục vụ 100+ người dùng trên 3+ đơn vị kinh doanh với 25M+ hồ sơ khách hàng"
+                    },
+                    {
+                        name: "Phát triển Nền tảng ML/AI:",
+                        desc: "Tạo nền tảng ML/AI toàn diện với MLflow, triển khai 20+ mô hình sản xuất từ pipeline nghiên cứu 100+ mô hình"
+                    },
+                    {
+                        name: "Kiến trúc Dữ liệu Đám mây Hybrid:",
+                        desc: "Dẫn dắt tư vấn kiến trúc dữ liệu cho chuyển đổi đám mây hybrid với giải pháp lakehouse"
+                    },
+                    {
+                        name: "Quản trị Dữ liệu & Tuân thủ:",
+                        desc: "Triển khai hệ thống MDM, DLP, và kiểm soát truy cập để đảm bảo tuân thủ quy định"
+                    },
+                    {
+                        name: "Nền tảng Dữ liệu Khách hàng (CDP):",
+                        desc: "Phát triển CDP với kho tính năng quản lý 1.000+ tính năng cho các mô hình ML tại VNPAY"
+                    },
+                    {
+                        name: "Blog Công nghệ & Chia sẻ Kiến thức:",
+                        desc: "Viết về kỹ thuật dữ liệu, ML/AI, và những hiểu biết về công nghệ"
+                    }
+                ],
+                contactText: "Hầu hết các dự án khác của tôi không có nhật ký phát triển chi tiết, nhưng vui lòng kiểm tra chúng trên GitHub.",
+                contactLinks: "Trong trường hợp bạn quan tâm, bạn có thể liên hệ với tôi qua email <strong>minhhieu111097@gmail.com</strong> hoặc <strong><a href=\"https://github.com/MH11097\">ghé thăm GitHub của tôi</a></strong>"
+            }
+        };
+
+        function renderHome(lang) {
+            const data = homeData[lang];
+            const content = document.getElementById('mainContent');
+            
+            content.innerHTML = `
+                <h1 class="main-title">${data.title}</h1>
+                <p class="subtitle">${data.subtitle}</p>
+                
+                <p class="intro-text">${data.intro}</p>
+                
+                <ul class="projects-list">
+                    ${data.projects.map((project, index) => `
+                        <li>
+                            <div class="project-number">${index + 1}</div>
+                            <div class="project-content">
+                                <div class="project-name">${project.name}</div>
+                                <div class="project-desc">${project.desc}</div>
+                            </div>
+                        </li>
+                    `).join('')}
+                </ul>
+                
+                <p class="contact-text">${data.contactText}</p>
+                
+                <p class="contact-links">${data.contactLinks}</p>
             `;
 
-            document.getElementById('post-list').style.display = 'none';
-            document.getElementById('post-content').style.display = 'block';
-
-            // Update URL without page reload
-            window.history.pushState({ post: filename }, '', `#${filename.replace('.md', '')}`);
+            // Update navigation using shared components
+            window.SharedComponents.updateNavigation(lang);
+            
+            // Update footer using shared components
+            const footer = document.getElementById('footerContent');
+            if (footer) {
+                footer.innerHTML = window.SharedComponents.renderFooter('home', lang);
+            }
         }
 
-        function showPostList() {
-            document.getElementById('post-list').style.display = 'block';
-            document.getElementById('post-content').style.display = 'none';
-            window.history.pushState({}, '', '#');
-        }
-
-        // Handle browser back/forward
-        window.addEventListener('popstate', function(event) {
-            if (event.state && event.state.post) {
-                showPost(event.state.post);
-            } else {
-                showPostList();
-            }
-        });
-
-        // Check URL on load
-        window.addEventListener('load', function() {
-            const hash = window.location.hash.substring(1);
-            if (hash) {
-                const filename = `${hash}.md`;
-                if (posts.some(post => post.file === filename)) {
-                    showPost(filename);
-                    return;
-                }
-            }
-            renderPostList();
+        // Listen for language changes
+        window.addEventListener('languageChanged', (e) => {
+            const content = document.getElementById('mainContent');
+            window.SharedComponents.applyTransition(content, () => {
+                renderHome(e.detail.lang);
+            });
         });
 
         // Initialize
-        renderPostList();
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentLang = window.SharedComponents.initializeLanguage();
+            renderHome(currentLang);
+        });
     </script>
 </body>
 </html>

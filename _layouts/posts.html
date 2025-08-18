@@ -1,0 +1,1095 @@
+---
+layout: with-sidebar
+---
+
+<div class="posts-page">
+    <!-- Enhanced Filter & Search Section -->
+    <div class="posts-filter">
+        <div class="filter-header">
+            <div class="header-left">
+                <h2 class="filter-title">{{ page.title | default: "Bài viết" }}</h2>
+                <span class="posts-count" id="posts-count">
+                    <i class="icon-doc-text"></i>
+                    <span id="count-number">Đang tải...</span>
+                </span>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="search-input" placeholder="Tìm kiếm bài viết, tags, nội dung...">
+                    <i class="icon-search search-icon"></i>
+                    <button class="search-clear" id="search-clear" style="display: none;">
+                        <i class="icon-cancel"></i>
+                    </button>
+                </div>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="grid" title="Xem dạng lưới">
+                        <i class="icon-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list" title="Xem dạng danh sách">
+                        <i class="icon-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-controls">
+            <div class="filter-section">
+                <label class="filter-label">
+                    <i class="icon-tag"></i>
+                    Tags:
+                </label>
+                <div class="filter-tags" id="filter-tags">
+                    <a href="#" class="filter-tag all active" data-tag="all">
+                        <span>Tất cả</span>
+                        <span class="tag-count" id="all-count">0</span>
+                    </a>
+                    <!-- Tags will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <label class="filter-label">
+                    <i class="icon-sort"></i>
+                    Sắp xếp:
+                </label>
+                <select class="sort-select" id="sort-select">
+                    <option value="date-desc">Mới nhất</option>
+                    <option value="date-asc">Cũ nhất</option>
+                    <option value="title-asc">A → Z</option>
+                    <option value="title-desc">Z → A</option>
+                    <option value="popular">Phổ biến</option>
+                </select>
+            </div>
+            
+            <div class="filter-actions">
+                <button class="btn-reset" id="reset-filters">
+                    <i class="icon-refresh"></i>
+                    Đặt lại bộ lọc
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="posts-container">
+        <div class="posts-grid grid-view" id="posts-grid">
+            <!-- Posts will be populated by JavaScript -->
+        </div>
+
+        <!-- List View (alternative layout) -->
+        <div class="posts-list list-view" id="posts-list" style="display: none;">
+            <!-- List posts will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="posts-loading" id="posts-loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Đang tải bài viết...</div>
+        <div class="loading-subtitle">Vui lòng chờ trong giây lát</div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="posts-empty" id="posts-empty" style="display: none;">
+        <i class="icon-search"></i>
+        <h3>Không tìm thấy bài viết</h3>
+        <p>Hãy thử tìm kiếm với từ khóa khác hoặc xóa bộ lọc để xem tất cả bài viết.</p>
+        <button class="btn-primary" id="clear-search">
+            <i class="icon-refresh"></i>
+            Xóa tìm kiếm
+        </button>
+    </div>
+
+    <!-- Enhanced Pagination -->
+    <div class="pagination-container" id="pagination-container" style="display: none;">
+        <div class="pagination-info">
+            <span id="pagination-info-text">Hiển thị 1-12 của 42 bài viết</span>
+        </div>
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be populated by JavaScript -->
+        </div>
+        <div class="pagination-controls">
+            <select class="posts-per-page" id="posts-per-page">
+                <option value="6">6 bài/trang</option>
+                <option value="12" selected>12 bài/trang</option>
+                <option value="24">24 bài/trang</option>
+                <option value="48">48 bài/trang</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Posts Manager Script -->
+<script>
+class EnhancedPostsManager {
+    constructor() {
+        this.posts = [];
+        this.filteredPosts = [];
+        this.currentTag = 'all';
+        this.currentSearch = '';
+        this.currentSort = 'date-desc';
+        this.currentView = 'grid';
+        this.currentPage = 1;
+        this.postsPerPage = 12;
+        this.tags = new Map(); // Tag name -> count
+        this.isLoading = false;
+        
+        // Get Jekyll posts data if available
+        this.jekyllPosts = {{ site.posts | jsonify }};
+        
+        this.init();
+    }
+    
+    async init() {
+        this.showLoading(true);
+        await this.loadPosts();
+        this.setupEventListeners();
+        this.setupKeyboardShortcuts();
+        this.render();
+        this.showLoading(false);
+        
+        // Add scroll-triggered animations
+        this.setupScrollAnimations();
+    }
+    
+    async loadPosts() {
+        try {
+            // Use Jekyll posts data if available, otherwise load from files
+            if (this.jekyllPosts && this.jekyllPosts.length > 0) {
+                this.posts = this.jekyllPosts.map(post => ({
+                    title: post.title || 'Untitled',
+                    date: post.date || '',
+                    tags: post.tags || [],
+                    excerpt: post.excerpt || this.generateExcerpt(post.content || ''),
+                    url: post.url || '#',
+                    featured: post.featured || false,
+                    type: post.type || 'post',
+                    author: post.author || 'MH11097',
+                    readTime: this.calculateReadTime(post.content || ''),
+                    views: Math.floor(Math.random() * 500) + 50 // Simulated views
+                }));
+            } else {
+                // Fallback to loading from file system
+                await this.loadPostsFromFiles();
+            }
+            
+            this.extractTags();
+            this.filteredPosts = [...this.posts];
+            this.sortPosts();
+            
+        } catch (error) {
+            console.error('Error loading posts:', error);
+            this.posts = [];
+            this.filteredPosts = [];
+        }
+    }
+    
+    async loadPostsFromFiles() {
+        // Fallback method for loading posts from files
+        const postFiles = [
+            '2025-08-11-test-post-mi.md',
+            '2023-08-01-rust-binary-tree-traversal.md',
+            '2023-06-15-mo-hinh-toan.md',
+            '2023-05-20-open-source-license.md',
+            '2023-03-15-john-pin-problem.md',
+            '2018-05-12-life-with-robot.md',
+            '2017-10-10-lap-trinh-va-toan-hoc.md'
+        ];
+        
+        const loadPromises = postFiles.map(file => this.loadPost(file));
+        const loadedPosts = await Promise.all(loadPromises);
+        this.posts = loadedPosts.filter(post => post !== null);
+    }
+    
+    async loadPost(filename) {
+        try {
+            const response = await fetch(`_posts/${filename}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const content = await response.text();
+            const { metadata, content: markdownContent } = this.parseMarkdownMetadata(content);
+            
+            if (metadata.published === 'false') return null;
+            
+            return {
+                title: metadata.title || 'Untitled',
+                date: metadata.date || '',
+                tags: (metadata.tags || '').split(',').map(tag => tag.trim()).filter(tag => tag),
+                excerpt: metadata.excerpt || this.generateExcerpt(markdownContent),
+                url: `#${filename}`,
+                filename: filename,
+                featured: metadata.featured === 'true',
+                type: metadata.type || 'post',
+                author: metadata.author || 'MH11097',
+                readTime: this.calculateReadTime(markdownContent),
+                views: Math.floor(Math.random() * 500) + 50
+            };
+        } catch (error) {
+            console.error(`Error loading post ${filename}:`, error);
+            return null;
+        }
+    }
+    
+    parseMarkdownMetadata(content) {
+        const lines = content.split('\n');
+        if (lines[0] !== '---') return { metadata: {}, content };
+        
+        const metadata = {};
+        let i = 1;
+        while (i < lines.length && lines[i] !== '---') {
+            const line = lines[i].trim();
+            if (line.includes(':')) {
+                const [key, ...valueParts] = line.split(':');
+                const value = valueParts.join(':').trim().replace(/['"]/g, '');
+                metadata[key.trim()] = value;
+            }
+            i++;
+        }
+        
+        const contentStart = i + 1;
+        const markdownContent = lines.slice(contentStart).join('\n');
+        return { metadata, content: markdownContent };
+    }
+    
+    generateExcerpt(content) {
+        const plainText = content
+            .replace(/#{1,6}\s/g, '')
+            .replace(/\*\*([^*]+)\*\*/g, '$1')
+            .replace(/\*([^*]+)\*/g, '$1')
+            .replace(/`([^`]+)`/g, '$1')
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+            .trim();
+            
+        const sentences = plainText.split('.').slice(0, 3).join('.');
+        return sentences.length > 200 ? sentences.substring(0, 200) + '...' : sentences + '.';
+    }
+    
+    calculateReadTime(content) {
+        const wordsPerMinute = 200;
+        const words = content.trim().split(/\s+/).length;
+        const readTime = Math.ceil(words / wordsPerMinute);
+        return Math.max(1, readTime);
+    }
+    
+    extractTags() {
+        this.tags.clear();
+        this.posts.forEach(post => {
+            post.tags.forEach(tag => {
+                this.tags.set(tag, (this.tags.get(tag) || 0) + 1);
+            });
+        });
+    }
+    
+    setupEventListeners() {
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+        
+        searchInput.addEventListener('input', (e) => {
+            this.currentSearch = e.target.value.toLowerCase();
+            this.currentPage = 1;
+            this.filterAndRender();
+            
+            // Show/hide clear button
+            searchClear.style.display = this.currentSearch ? 'block' : 'none';
+        });
+        
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            this.currentSearch = '';
+            this.currentPage = 1;
+            this.filterAndRender();
+            searchClear.style.display = 'none';
+        });
+        
+        // Tag filters
+        document.getElementById('filter-tags').addEventListener('click', (e) => {
+            if (e.target.closest('.filter-tag')) {
+                e.preventDefault();
+                const tag = e.target.closest('.filter-tag').dataset.tag;
+                this.setActiveTag(tag);
+            }
+        });
+        
+        // Sort functionality
+        document.getElementById('sort-select').addEventListener('change', (e) => {
+            this.currentSort = e.target.value;
+            this.currentPage = 1;
+            this.filterAndRender();
+        });
+        
+        // View controls
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const view = e.target.closest('.view-btn').dataset.view;
+                this.setView(view);
+            });
+        });
+        
+        // Posts per page
+        document.getElementById('posts-per-page').addEventListener('change', (e) => {
+            this.postsPerPage = parseInt(e.target.value);
+            this.currentPage = 1;
+            this.render();
+        });
+        
+        // Reset filters
+        document.getElementById('reset-filters').addEventListener('click', () => {
+            this.resetFilters();
+        });
+        
+        // Clear search from empty state
+        document.getElementById('clear-search').addEventListener('click', () => {
+            this.resetFilters();
+        });
+    }
+    
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + K for search focus
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('search-input').focus();
+            }
+            
+            // Escape to clear search
+            if (e.key === 'Escape') {
+                const searchInput = document.getElementById('search-input');
+                if (searchInput === document.activeElement) {
+                    searchInput.blur();
+                    this.resetFilters();
+                }
+            }
+        });
+    }
+    
+    setupScrollAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe cards as they're created
+        this.observer = observer;
+    }
+    
+    setActiveTag(tag) {
+        this.currentTag = tag;
+        this.currentPage = 1;
+        
+        // Update active state
+        document.querySelectorAll('.filter-tag').forEach(el => el.classList.remove('active'));
+        document.querySelector(`[data-tag="${tag}"]`).classList.add('active');
+        
+        this.filterAndRender();
+    }
+    
+    setView(view) {
+        this.currentView = view;
+        
+        // Update button states
+        document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`[data-view="${view}"]`).classList.add('active');
+        
+        // Show/hide appropriate containers
+        const gridContainer = document.getElementById('posts-grid');
+        const listContainer = document.getElementById('posts-list');
+        
+        if (view === 'grid') {
+            gridContainer.style.display = 'grid';
+            listContainer.style.display = 'none';
+        } else {
+            gridContainer.style.display = 'none';
+            listContainer.style.display = 'block';
+        }
+        
+        this.renderPosts();
+    }
+    
+    resetFilters() {
+        this.currentTag = 'all';
+        this.currentSearch = '';
+        this.currentSort = 'date-desc';
+        this.currentPage = 1;
+        
+        // Reset UI
+        document.getElementById('search-input').value = '';
+        document.getElementById('search-clear').style.display = 'none';
+        document.getElementById('sort-select').value = 'date-desc';
+        document.querySelectorAll('.filter-tag').forEach(el => el.classList.remove('active'));
+        document.querySelector('[data-tag="all"]').classList.add('active');
+        
+        this.filterAndRender();
+    }
+    
+    filterAndRender() {
+        this.filteredPosts = this.posts.filter(post => {
+            const matchesTag = this.currentTag === 'all' || post.tags.includes(this.currentTag);
+            const matchesSearch = this.currentSearch === '' || 
+                                post.title.toLowerCase().includes(this.currentSearch) ||
+                                post.excerpt.toLowerCase().includes(this.currentSearch) ||
+                                post.tags.some(tag => tag.toLowerCase().includes(this.currentSearch));
+            return matchesTag && matchesSearch;
+        });
+        
+        this.sortPosts();
+        this.render();
+    }
+    
+    sortPosts() {
+        this.filteredPosts.sort((a, b) => {
+            switch (this.currentSort) {
+                case 'date-desc':
+                    return new Date(b.date) - new Date(a.date);
+                case 'date-asc':
+                    return new Date(a.date) - new Date(b.date);
+                case 'title-asc':
+                    return a.title.localeCompare(b.title);
+                case 'title-desc':
+                    return b.title.localeCompare(a.title);
+                case 'popular':
+                    return b.views - a.views;
+                default:
+                    return 0;
+            }
+        });
+    }
+    
+    render() {
+        this.renderTags();
+        this.renderPosts();
+        this.renderPagination();
+        this.updateCount();
+    }
+    
+    renderTags() {
+        const tagsContainer = document.getElementById('filter-tags');
+        const allTag = tagsContainer.querySelector('.all');
+        
+        // Update "All" count
+        document.getElementById('all-count').textContent = this.posts.length;
+        
+        // Clear existing tags except "All"
+        const existingTags = tagsContainer.querySelectorAll('.filter-tag:not(.all)');
+        existingTags.forEach(tag => tag.remove());
+        
+        // Add new tags sorted by count
+        const sortedTags = Array.from(this.tags.entries())
+            .sort(([,a], [,b]) => b - a)
+            .slice(0, 15); // Limit to top 15 tags
+        
+        sortedTags.forEach(([tag, count]) => {
+            const tagElement = document.createElement('a');
+            tagElement.href = '#';
+            tagElement.className = 'filter-tag';
+            tagElement.dataset.tag = tag;
+            tagElement.innerHTML = `
+                <span>${tag}</span>
+                <span class="tag-count">${count}</span>
+            `;
+            tagsContainer.appendChild(tagElement);
+        });
+    }
+    
+    renderPosts() {
+        const startIndex = (this.currentPage - 1) * this.postsPerPage;
+        const endIndex = startIndex + this.postsPerPage;
+        const postsToShow = this.filteredPosts.slice(startIndex, endIndex);
+        
+        if (postsToShow.length === 0) {
+            this.showEmpty(true);
+            return;
+        }
+        
+        this.showEmpty(false);
+        
+        if (this.currentView === 'grid') {
+            this.renderGridPosts(postsToShow);
+        } else {
+            this.renderListPosts(postsToShow);
+        }
+    }
+    
+    renderGridPosts(posts) {
+        const container = document.getElementById('posts-grid');
+        container.innerHTML = posts.map((post, index) => `
+            <article class="post-card ${post.featured ? 'featured' : ''} scroll-fade-in" style="animation-delay: ${index * 0.1}s">
+                ${post.featured ? '<div class="featured-badge">Featured</div>' : ''}
+                <div class="post-card-image ${post.image ? '' : 'no-image'}">
+                    ${post.image ? `<img src="${post.image}" alt="${post.title}" loading="lazy">` : ''}
+                    ${post.type !== 'post' ? `<div class="post-label ${post.type}">${post.type}</div>` : ''}
+                </div>
+                <div class="post-card-content">
+                    <a href="${post.url}" class="post-link">
+                        <h3 class="post-title">${post.title}</h3>
+                    </a>
+                    <p class="post-excerpt">${post.excerpt}</p>
+                    <div class="post-tags">
+                        ${post.tags.slice(0, 3).map(tag => `
+                            <a href="#" class="tag" data-tag="${tag}">${tag}</a>
+                        `).join('')}
+                        ${post.tags.length > 3 ? `<span class="tag-more">+${post.tags.length - 3}</span>` : ''}
+                    </div>
+                    <div class="post-meta">
+                        <div class="meta-left">
+                            <span class="post-date">
+                                <i class="icon-calendar"></i>
+                                ${this.formatDate(post.date)}
+                            </span>
+                            <span class="post-author">
+                                <i class="icon-user"></i>
+                                ${post.author}
+                            </span>
+                        </div>
+                        <div class="post-stats">
+                            <span class="stat-item">
+                                <i class="icon-clock"></i>
+                                ${post.readTime} phút
+                            </span>
+                            <span class="stat-item">
+                                <i class="icon-eye"></i>
+                                ${post.views}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        `).join('');
+        
+        // Add click handlers and animations
+        this.addPostEventListeners(container);
+    }
+    
+    renderListPosts(posts) {
+        const container = document.getElementById('posts-list');
+        container.innerHTML = posts.map((post, index) => `
+            <article class="post-item-list scroll-fade-in" style="animation-delay: ${index * 0.05}s">
+                <div class="post-list-image">
+                    ${post.image ? `<img src="${post.image}" alt="${post.title}" loading="lazy">` : '📝'}
+                </div>
+                <div class="post-list-content">
+                    <div class="post-list-header">
+                        <a href="${post.url}" class="post-list-title">${post.title}</a>
+                        <div class="post-list-meta">
+                            <span class="post-date">${this.formatDate(post.date)}</span>
+                            <span class="post-read-time">${post.readTime} phút đọc</span>
+                            <span class="post-views">${post.views} lượt xem</span>
+                        </div>
+                    </div>
+                    <p class="post-list-excerpt">${post.excerpt}</p>
+                    <div class="post-list-tags">
+                        ${post.tags.slice(0, 4).map(tag => `
+                            <a href="#" class="tag-small" data-tag="${tag}">${tag}</a>
+                        `).join('')}
+                    </div>
+                </div>
+            </article>
+        `).join('');
+        
+        this.addPostEventListeners(container);
+    }
+    
+    addPostEventListeners(container) {
+        // Tag click handlers
+        container.querySelectorAll('.tag, .tag-small').forEach(tag => {
+            tag.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.setActiveTag(e.target.dataset.tag);
+            });
+        });
+        
+        // Add intersection observer for animations
+        if (this.observer) {
+            container.querySelectorAll('.scroll-fade-in').forEach(el => {
+                this.observer.observe(el);
+            });
+        }
+    }
+    
+    renderPagination() {
+        const totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
+        const container = document.getElementById('pagination-container');
+        const pagination = document.getElementById('pagination');
+        
+        if (totalPages <= 1) {
+            container.style.display = 'none';
+            return;
+        }
+        
+        container.style.display = 'flex';
+        
+        // Update pagination info
+        const startIndex = (this.currentPage - 1) * this.postsPerPage + 1;
+        const endIndex = Math.min(this.currentPage * this.postsPerPage, this.filteredPosts.length);
+        document.getElementById('pagination-info-text').textContent = 
+            `Hiển thị ${startIndex}-${endIndex} của ${this.filteredPosts.length} bài viết`;
+        
+        let paginationHTML = '';
+        
+        // Previous button
+        paginationHTML += `
+            <a href="#" class="pagination-btn ${this.currentPage === 1 ? 'disabled' : ''}" data-page="${this.currentPage - 1}">
+                <i class="icon-left-open"></i>
+                Trước
+            </a>
+        `;
+        
+        // Page numbers with smart truncation
+        const delta = 2;
+        const range = [];
+        const rangeWithDots = [];
+        
+        for (let i = Math.max(2, this.currentPage - delta); 
+             i <= Math.min(totalPages - 1, this.currentPage + delta); 
+             i++) {
+            range.push(i);
+        }
+        
+        if (this.currentPage - delta > 2) {
+            rangeWithDots.push(1, '...');
+        } else {
+            rangeWithDots.push(1);
+        }
+        
+        rangeWithDots.push(...range);
+        
+        if (this.currentPage + delta < totalPages - 1) {
+            rangeWithDots.push('...', totalPages);
+        } else if (totalPages > 1) {
+            rangeWithDots.push(totalPages);
+        }
+        
+        rangeWithDots.forEach(page => {
+            if (page === '...') {
+                paginationHTML += '<span class="pagination-dots">...</span>';
+            } else {
+                paginationHTML += `
+                    <a href="#" class="pagination-page ${page === this.currentPage ? 'current' : ''}" data-page="${page}">
+                        ${page}
+                    </a>
+                `;
+            }
+        });
+        
+        // Next button
+        paginationHTML += `
+            <a href="#" class="pagination-btn ${this.currentPage === totalPages ? 'disabled' : ''}" data-page="${this.currentPage + 1}">
+                Sau
+                <i class="icon-right-open"></i>
+            </a>
+        `;
+        
+        pagination.innerHTML = paginationHTML;
+        
+        // Add click handlers
+        pagination.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!e.target.closest('.disabled')) {
+                    const page = parseInt(e.target.closest('a').dataset.page);
+                    this.goToPage(page);
+                }
+            });
+        });
+    }
+    
+    goToPage(page) {
+        this.currentPage = page;
+        this.renderPosts();
+        this.renderPagination();
+        
+        // Smooth scroll to top of posts
+        document.querySelector('.posts-container').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+    
+    updateCount() {
+        const countElement = document.getElementById('count-number');
+        countElement.textContent = `${this.filteredPosts.length} bài viết`;
+    }
+    
+    formatDate(dateStr) {
+        try {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('vi-VN', { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric' 
+            });
+        } catch {
+            return dateStr;
+        }
+    }
+    
+    showLoading(show) {
+        const loading = document.getElementById('posts-loading');
+        const container = document.querySelector('.posts-container');
+        const paginationContainer = document.getElementById('pagination-container');
+        
+        loading.style.display = show ? 'flex' : 'none';
+        container.style.display = show ? 'none' : 'block';
+        
+        if (!show) {
+            paginationContainer.style.display = this.filteredPosts.length > this.postsPerPage ? 'flex' : 'none';
+        }
+    }
+    
+    showEmpty(show) {
+        const empty = document.getElementById('posts-empty');
+        const container = document.querySelector('.posts-container');
+        const paginationContainer = document.getElementById('pagination-container');
+        
+        empty.style.display = show ? 'block' : 'none';
+        container.style.display = show ? 'none' : 'block';
+        paginationContainer.style.display = show ? 'none' : 'flex';
+    }
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    new EnhancedPostsManager();
+});
+</script>
+
+<style>
+/* Enhanced Posts Page Styles */
+.posts-page {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced Filter Controls */
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filter-label i {
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.sort-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 13px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sort-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.filter-actions {
+    margin-left: auto;
+}
+
+.btn-reset {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #666;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-reset:hover {
+    background: #f8f9fa;
+    border-color: #bbb;
+}
+
+/* View Controls */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.view-controls {
+    display: flex;
+    gap: 4px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.view-btn {
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #666;
+}
+
+.view-btn.active,
+.view-btn:hover {
+    background: white;
+    color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Search enhancements */
+.search-clear {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.search-clear:hover {
+    background: #f5f5f5;
+    color: #666;
+}
+
+/* List View Styles */
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-item-list {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: listItemFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes listItemFadeIn {
+    to { opacity: 1; }
+}
+
+.post-item-list:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.post-list-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background: var(--gradient-info);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.post-list-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.post-list-content {
+    flex: 1;
+}
+
+.post-list-header {
+    margin-bottom: 10px;
+}
+
+.post-list-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.post-list-title:hover {
+    color: var(--primary-color);
+}
+
+.post-list-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 12px;
+    color: #999;
+}
+
+.post-list-excerpt {
+    margin: 10px 0;
+    color: #666;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-list-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tag-small {
+    padding: 2px 6px;
+    background: #f8f9fa;
+    color: #666;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 10px;
+    transition: all 0.3s ease;
+}
+
+.tag-small:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Enhanced Pagination */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: #666;
+}
+
+.pagination-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(.disabled) {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.pagination-controls {
+    font-size: 12px;
+}
+
+.posts-per-page {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 12px;
+    background: white;
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+    .filter-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .filter-section {
+        flex-wrap: wrap;
+    }
+    
+    .filter-actions {
+        margin-left: 0;
+    }
+    
+    .header-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .pagination-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .post-item-list {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .post-list-image {
+        margin: 0 auto 15px auto;
+    }
+}
+</style>

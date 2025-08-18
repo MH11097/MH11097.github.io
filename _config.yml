@@ -34,6 +34,9 @@ collections:
   posts:
     output: true
     permalink: /posts/:name/
+  tags:
+    output: true
+    permalink: /tags/:name/
 
 # Defaults
 defaults:
@@ -41,19 +44,42 @@ defaults:
       path: ""
       type: "posts"
     values:
-      layout: "post"
+      layout: "with-sidebar"
       math: true
       comments: true
   - scope:
       path: ""
     values:
       layout: "default"
+  - scope:
+      path: "posts"
+    values:
+      layout: "posts"
+  - scope:
+      path: "tags"
+    values:
+      layout: "with-sidebar"
 
 # Scientific settings
 math: true
 code_highlighting: true
 
-# Exclude from processing  
+# Navigation
+navigation:
+  - title: "Trang chủ"
+    url: "/"
+    icon: "icon-home"
+  - title: "Bài viết"
+    url: "/posts/"
+    icon: "icon-doc-text"
+  - title: "Thẻ"
+    url: "/tags/"
+    icon: "icon-tag"
+  - title: "CV"
+    url: "/cv.html"
+    icon: "icon-doc"
+
+# Exclude from processing
 exclude:
   - .claude/
   - .serena/

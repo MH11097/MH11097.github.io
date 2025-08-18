@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;">
+    <meta name="viewport" content="initial-scale=1.0 maximum-scale=1.0">
+    
+    <title>{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}</title>
+    
+    {% seo %}
+    
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin-ext,vietnamese" rel="stylesheet">
+    <link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet" type="text/css">
+    <link href="{{ '/assets/css/sidebar.css' | relative_url }}" rel="stylesheet" type="text/css">
+    <link href="{{ '/assets/css/grid.css' | relative_url }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ '/assets/css/fontello.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/highlight/tomorrow-night.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/emoji/css/messenger.min.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/emoji/css/thinking.ext.css' | relative_url }}">
+    
+    <!-- MathJax Support -->
+    {% if page.math %}
+        {% include math.html %}
+    {% endif %}
+</head>
+
+<body class="with-sidebar">
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        {% include sidebar.html %}
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            {% if page.show_header != false %}
+                <header class="content-header">
+                    {% if page.breadcrumb %}
+                        <nav class="breadcrumb">
+                            <a href="{{ '/' | relative_url }}">Home</a>
+                            {% for crumb in page.breadcrumb %}
+                                <span class="separator">/</span>
+                                {% if forloop.last %}
+                                    <span class="current">{{ crumb }}</span>
+                                {% else %}
+                                    <a href="{{ crumb.url | relative_url }}">{{ crumb.title }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </nav>
+                    {% endif %}
+                    
+                    {% if page.title %}
+                        <h1 class="page-title">{{ page.title }}</h1>
+                    {% endif %}
+                    
+                    {% if page.description %}
+                        <p class="page-description">{{ page.description }}</p>
+                    {% endif %}
+                </header>
+            {% endif %}
+            
+            <!-- Page Content -->
+            <div class="content-body">
+                {{ content }}
+            </div>
+            
+            <!-- Content Footer -->
+            {% if page.show_footer != false %}
+                <footer class="content-footer">
+                    {% if page.layout == 'post' %}
+                        <div class="post-meta">
+                            <span class="post-date">
+                                <i class="icon-calendar"></i>
+                                {{ page.date | date: "%B %d, %Y" }}
+                            </span>
+                            {% if page.tags and page.tags.size > 0 %}
+                                <div class="post-tags">
+                                    <i class="icon-tag"></i>
+                                    {% for tag in page.tags %}
+                                        <a href="{{ '/tags.html#' | append: tag | relative_url }}" class="tag">{{ tag }}</a>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Navigation between posts -->
+                        <nav class="post-navigation">
+                            {% if page.previous %}
+                                <a href="{{ page.previous.url | relative_url }}" class="nav-previous">
+                                    <i class="icon-left-open"></i>
+                                    <span>{{ page.previous.title | truncate: 50 }}</span>
+                                </a>
+                            {% endif %}
+                            
+                            {% if page.next %}
+                                <a href="{{ page.next.url | relative_url }}" class="nav-next">
+                                    <span>{{ page.next.title | truncate: 50 }}</span>
+                                    <i class="icon-right-open"></i>
+                                </a>
+                            {% endif %}
+                        </nav>
+                    {% endif %}
+                    
+                    <!-- Back to top -->
+                    <div class="back-to-top">
+                        <a href="#top" class="btn-back-top">
+                            <i class="icon-up-open"></i>
+                            <span>Top</span>
+                        </a>
+                    </div>
+                </footer>
+            {% endif %}
+        </main>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+    </button>
+
+    <!-- Scripts -->
+    <script src="{{ '/assets/js/highlight.pack.js' | relative_url }}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <!-- Sidebar Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const container = document.querySelector('.container');
+            
+            mobileToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('mobile-open');
+                container.classList.toggle('sidebar-open');
+                mobileToggle.classList.toggle('active');
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768) {
+                    if (!sidebar.contains(event.target) && !mobileToggle.contains(event.target)) {
+                        sidebar.classList.remove('mobile-open');
+                        container.classList.remove('sidebar-open');
+                        mobileToggle.classList.remove('active');
+                    }
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('mobile-open');
+                    container.classList.remove('sidebar-open');
+                    mobileToggle.classList.remove('active');
+                }
+            });
+            
+            // Smooth scroll for back to top
+            document.querySelector('.btn-back-top')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+    
+    {% include scripts.html %}
+</body>
+</html>
